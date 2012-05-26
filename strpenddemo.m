@@ -1,8 +1,10 @@
 function strpenddemo
 %STRPENDDEMO  Simulate and animate string pendulum hanging between two cylinders
 %
-%	Andrew D. Horchler, adh9@case.edu, Created 3-7-01, Modified: 4-30-12
+%
 
+%   Andrew D. Horchler, adh9 @ case . edu
+%   Created: 3-7-01, Modified: 5-26-12
 %   CC BY-SA, Creative Commons Attribution-ShareAlike License
 %   http://creativecommons.org/licenses/by-sa/3.0/
 

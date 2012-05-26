@@ -9,10 +9,12 @@ classdef QTWriter < handle
     %   FILENAME can include an absolute or relative path.
     %
     %   OBJ = QTWriter(...,'PropertyName','PropertyValue',...) specifies options
-    %   via property name-value pairs. The default compression movie format
+    %   via property name-value pairs. The default movie format compression
     %   (codec) is lossless 'Photo PNG', but the lossy 'Photo JPEG' format can
-    %   be specified via the 'MovieFormat' property. See below for a list of
-    %   other supported property names and assosciated values.
+    %   be specified via the 'MovieFormat' property. The lossless 'Photo TIFF'
+    %   format (packbit compression) yields larger file sizes than Photo PNG,
+    %   but is faster. See below for a list of other supported property names
+    %   and assosciated values.
     %
     %   Methods:
     %       close              - Close file after writing movie data.
@@ -42,9 +44,10 @@ classdef QTWriter < handle
     %                            movie format and the ColorSpace and
     %                            Transparency properties).
     %       CompressionMode    - String indicating the type of movie
-    %                            compression. The Photo PNG format only supports
-    %                            'lossless' compression and the Photo JPEG
-    %                            only supports 'lossy' compression. (Read-only).
+    %                            compression. The Photo PNG and Photo TIFF
+    %                            formats only support 'lossless' compression and
+    %                            the Photo JPEG format only supports 'lossy'
+    %                            compression. (Read-only).
     %       Duration           - Current movie duration in seconds, based on the
     %                            value of TimeScale and the FrameRate for each
     %                            frame. (Read-only).
@@ -68,13 +71,13 @@ classdef QTWriter < handle
     %                            second. (Read-only).
     %       MeanFrameRate      - Current average frame rate of the movie in
     %                            frames per second. (Read-only).
-	%       MinFrameRate       - Current minimum frame rate in frames per
+    %       MinFrameRate       - Current minimum frame rate in frames per
     %                            second. (Read-only).
-	%       MovieFormat        - String indicating the QuickTime movie format
+    %       MovieFormat        - String indicating the QuickTime movie format
     %                            (codec) to be used for compression. Supported
-    %                            formats are 'Photo PNG' (default) and 'Photo
-    %                            JPEG'. (Read-only, specified in the object
-    %                            constructor).
+    %                            formats are 'Photo PNG' (default), 'Photo
+    %                            JPEG', and 'Photo TIFF'. (Read-only, specified
+    %                            in the object constructor).
     %       PlayAllFrames      - Boolean (true or false) indicating if the
     %                            'Play All Frames' flag should be set in the
     %                            movie file. Default is false.
@@ -91,14 +94,14 @@ classdef QTWriter < handle
     %                            Larger time-scale values allow greater temporal
     %                            resolution. Default is 10,000.
     %       Transparency       - Boolean (true or false) indicating if alpha
-    %                            channel data is present and should be exported.
-    %                            If the Transparency property is set to true and
-    %                            the input data does not have an alpha channel,
-    %                            it will be set to opaque. If the Transparency
-    %                            property is set to false or is not supported by
-    %                            the MovieFormat (Photo JPEG) any alpha data
-    %                            will be ignored. (Read-only, specified in the
-    %                            object constructor).
+    %                            channel data is present and should be exported
+    %                            (Photo PNG only). If the Transparency property
+    %                            is set to true and the input data does not have
+    %                            an alpha channel, it will be set to opaque. If
+    %                            the Transparency property is set to false or is
+    %                            not supported by the MovieFormat, any alpha
+    %                            data will be ignored. Read-only, specified in
+    %                            the object constructor).
     %       Width              - Width of each movie frame in pixels.
     %                            (Read-only, the writeMovie method sets values
     %                            for Height and Width based on the dimensions of
@@ -151,8 +154,8 @@ classdef QTWriter < handle
     %   which attempts to remove all of the temporary images and assosciated
     %   memory used by the object.
     
-    %   Andrew D. Horchler, adh9@case.edu, Created 10-3-11
-    %   Revision: 1.0, 4-30-12
+    %   Andrew D. Horchler, adh9 @ case . edu
+    %   Created: 10-3-11, Revision: 1.1, 5-26-12
     %   CC BY-SA, Creative Commons Attribution-ShareAlike License
     %   http://creativecommons.org/licenses/by-sa/3.0/
     
@@ -183,7 +186,7 @@ classdef QTWriter < handle
     end
     
     properties (SetAccess=private,Hidden,Transient)
-        IsOpen = false;	% Indicates if the movie file is open for writing
+        IsOpen = false;     % Indicates if the movie file is open for writing
     end
     
     properties (Access=private)
@@ -827,8 +830,9 @@ classdef QTWriter < handle
             
             % Resolve movie format
             switch movieProfile.MovieFormat
-                case lower({'default','PNG','Photo PNG','Photo-PNG','PhotoPNG',...
-                        'Apple Photo - PNG','Apple Photo PNG','Apple PNG'})
+                case lower({'default','PNG','Photo PNG','Photo-PNG',...
+                        'PhotoPNG','Apple Photo - PNG','Apple Photo PNG',...
+                        'Apple PNG'})
                     movieProfile.MovieImageFormat = 'png';
                     movieProfile.ImageFormatName = 'png ';
                     movieProfile.MovieFormat = 'Photo PNG';
@@ -840,11 +844,18 @@ classdef QTWriter < handle
                     movieProfile.ImageFormatName = 'jpeg';
                     movieProfile.MovieFormat = 'Photo JPEG';
                     movieProfile.MovieFormatName = 'Photo - JPEG';
+                case lower({'TIFF','Photo TIFF','TIF','Photo-TIFF',...
+                        'PhotoTIFF','Apple Photo - TIFF','Apple Photo TIFF',...
+                        'Apple TIFF'})
+                    movieProfile.MovieImageFormat = 'tif';
+                    movieProfile.ImageFormatName = 'tiff';
+                    movieProfile.MovieFormat = 'Photo TIFF';
+                    movieProfile.MovieFormatName = 'TIFF';
                 otherwise
                     error('QTWriter:createMovieProfile:InvalidMovieFormat',...
                          ['An unknown MovieFormat, ''%s'', was specified. '...
                           'Valid movie formats are: ''Photo PNG'' '...
-                          '(default) and ''Photo JPEG''.'],...
+                          '(default), ''Photo JPEG'', and ''Photo TIFF''.'],...
                           parameters.MovieFormat);
             end
             
@@ -943,7 +954,7 @@ classdef QTWriter < handle
                             [],filename,...
                             'bitdepth',movieProfile.ImageBitDepth);
                     end
-                                case 'jpg'
+                case 'jpg'
                     % Set Transparency
                     movieProfile.ImageTransparency = false;
                     if ~isempty(parameters.Transparency) && ...
@@ -1027,10 +1038,86 @@ classdef QTWriter < handle
                        	[],filename,...
                        	'quality',movieProfile.ImageQuality,...
                       	'bitdepth',movieProfile.ImageBitDepth);
+             	case 'tif'
+                    % Set Transparency
+                    movieProfile.ImageTransparency = false;
+                    if ~isempty(parameters.Transparency) && ...
+                            ~any(strcmpi(parameters.Transparency,...
+                            {'no','none','off','false'}))
+                        warning('QTWriter:createMovieProfile:AlphaNotSupportedTIF',...
+                               ['The Transparency property is not ' ...
+                                'supported for %s format movies. Any '...
+                                'provided alpha channel data will be '...
+                                'ignored.'],movieProfile.MovieFormat);
+                    end
+                    
+                    % Set Compression Mode
+                    movieProfile.ImageCompressionMode = 'lossless';
+                    if ~isempty(parameters.CompressionMode) && ...
+                            ~strcmpi(parameters.CompressionMode,'lossless')
+                        warning('QTWriter:createMovieProfile:LossyNotSupportedTIF',...
+                               ['The CompressionMode property is not ' ...
+                                'supported for Photo TIFF format movies. '...
+                                'Lossless packbit compression is used for '...
+                                'the TIFF format.']);
+                    end
+                    
+                    % Set Bit Depth
+                    movieProfile.ImageBitDepth = 8;
+                    if ~isempty(parameters.BitDepth) && ...
+                            isscalar(parameters.BitDepth) && ...
+                            parameters.BitDepth ~= 8
+                        warning('QTWriter:createMovieProfile:BitDepthNotSupportedTIF',...
+                               ['The BitDepth property is not supported ' ...
+                                'for Photo TIFF format movies. All movies '...
+                                'have a bit-depth of 8 (8-bit grayscale and '...
+                                '24-bit RGB).']);
+                    end
+                    
+                    % Set Colorspace  and Color Channels
+                    if ~isempty(parameters.ColorSpace)
+                        if any(strcmpi(parameters.ColorSpace,...
+                                    {'grayscale','monochrome'}))
+                            movieProfile.ImageColorSpace = 'grayscale';
+                            movieProfile.ImageColorChannels = 1;
+                        elseif any(strcmpi(parameters.ColorSpace,...
+                                    {'rgb','truecolor','any'}))
+                            movieProfile.ImageColorSpace = 'rgb';
+                            movieProfile.ImageColorChannels = 3;
+                        else
+                            error('QTWriter:createMovie:InvalidColorSpaceTIF',...
+                                 ['The ColorSpace for Photo TIFF format '...
+                                  'movies, if specified, must be either '...
+                                  '''rgb'' or ''grayscale''.']);
+                        end
+                    else
+                        movieProfile.ImageColorSpace = 'rgb';
+                        movieProfile.ImageColorChannels = 3;
+                    end
+                    
+                    % Set Quality
+                    movieProfile.ImageQuality = 100;
+                    if ~isempty(parameters.Quality) && ...
+                            isscalar(parameters.Quality) && ...
+                            isreal(parameters.Quality) && ...
+                            isnumeric(parameters.Quality) && ...
+                            parameters.Quality ~= 100
+                        warning('QTWriter:createMovieProfile:BitDepthNotSupportedTIF',...
+                               ['The Quality property is not supported for ' ...
+                                'Photo TIFF format movies. Lossless packbit '...
+                                'compression is used for the TIFF format.']);
+                    end
+                    
+                    % Create function handle
+                    movieProfile.TmpImageWriteFunction = ...
+                        @(frame,filename)feval(ImageFormat.write,...
+                        frame(:,:,1:movieProfile.ImageColorChannels),...
+                        [],filename);
                 otherwise
                     error('QTWriter:createMovieProfile:InvalidMovieFormat',...
                          ['An unknown MovieFormat, ''%s'', was specified. '...
-                          'Valid movie formats are: ''jpg''.'],...
+                          'Valid movie formats are: ''Photo PNG'', '...
+                          '''Photo JPEG'', and ''Photo TIFF''.'],...
                           parameters.MovieFormat);
             end
             
