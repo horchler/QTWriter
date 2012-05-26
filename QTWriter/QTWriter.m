@@ -2,7 +2,7 @@ classdef QTWriter < handle
     %QTWriter  Create a QuickTime movie writer object.
     %   
     %   OBJ = QTWriter(FILENAME) constructs a QTWriter object to write QuickTime
-    %   movie data to a '.mov' file that using lossless Photo PNG compression.
+    %   movie data to a '.mov' file using lossless Photo PNG compression.
     %   FILENAME is a string enclosed in single quotation marks that specifies
     %   the name of the file to create. If filename does not include an
     %   extension the QTWriter constructor appends the '.mov' extension. The
