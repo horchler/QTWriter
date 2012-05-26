@@ -489,6 +489,64 @@ end
 tests = tests+1;
 
 
+% TIFF compression, uncompressed
+movObj = QTWriter('peaks_tif_none.mov','MovieFormat','Photo TIFF',...
+    'CompressionType','none');
+
+% Animate plot and write movie
+for k = 0:frames
+	surf(sin(2*pi*k/frames)*Z,Z);
+
+	% Vary the frame-rate
+	movObj.FrameRate = k;
+
+	% Write each frame to the file
+	writeMovie(movObj,getframe(hf));
+end
+ 
+% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
+movObj.Loop = 'backandforth';
+movObj.PlayAllFrames = true;
+movObj.TimeScale = 1e3;
+     
+% Finish writing movie, close file, and clear object
+close(movObj);
+clear movObj;
+if clearfiles
+    delete('peaks_tif_none.mov');
+end
+tests = tests+1;
+
+
+% TIFF compression, LZW compression type
+movObj = QTWriter('peaks_tif_lzw.mov','MovieFormat','Photo TIFF',...
+    'CompressionType','lzw');
+
+% Animate plot and write movie
+for k = 0:frames
+	surf(sin(2*pi*k/frames)*Z,Z);
+
+	% Vary the frame-rate
+	movObj.FrameRate = k;
+
+	% Write each frame to the file
+	writeMovie(movObj,getframe(hf));
+end
+ 
+% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
+movObj.Loop = 'backandforth';
+movObj.PlayAllFrames = true;
+movObj.TimeScale = 1e3;
+     
+% Finish writing movie, close file, and clear object
+close(movObj);
+clear movObj;
+if clearfiles
+    delete('peaks_tif_lzw.mov');
+end
+tests = tests+1;
+
+
 toc
 disp(['All ' num2str(tests) ' unit tests passed.'])
 

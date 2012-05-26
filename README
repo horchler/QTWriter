@@ -11,12 +11,13 @@ QTWriter
    OBJ = QTWriter(...,'PropertyName','PropertyValue',...) specifies options via
    property name-value pairs. In addition to the default Photo PNG compression,
    Photo TIFF and Photo JPEG formats can be specified via the 'MovieFormat'
-   property. Lossless Photo TIFF compression (packbit) yields larger file sizes
-   than Photo PNG, but is faster. Photo JPEG is a lossy format and the 'Quality'
-   property can be used to specify the level of compression to use. The
-   'ColorSpace' property specifies if the movie is to be output as 24-bit RGB
-   truecolor or 8-bit grayscale. The 'Transparency' property indicates if the
-   movie is to be output with an alpha channel (Photo PNG format only).
+   property. Lossless Photo TIFF compression yields larger file sizes than Photo
+   PNG, but is faster (using LZW or the default PackBits 'CompressionType').
+   Photo JPEG is a lossy format and the 'Quality' property can be used to
+   specify the level of compression to use. The 'ColorSpace' property specifies
+   if the movie is to be output as 24-bit RGB truecolor or 8-bit grayscale. The
+   'Transparency' property indicates if the movie is to be output with an alpha
+   channel (Photo PNG format only).
    
    Frames are written via the writeMovie(FRAME) method of the QTWriter object.
    The frame rate of the movie can be continuously varied via the 'FrameRate'

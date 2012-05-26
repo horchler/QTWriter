@@ -12,9 +12,9 @@ classdef QTWriter < handle
     %   via property name-value pairs. The default movie format compression
     %   (codec) is lossless 'Photo PNG', but the lossy 'Photo JPEG' format can
     %   be specified via the 'MovieFormat' property. The lossless 'Photo TIFF'
-    %   format (packbit compression) yields larger file sizes than Photo PNG,
-    %   but is faster. See below for a list of other supported property names
-    %   and assosciated values.
+    %   format yields larger file sizes than Photo PNG, but is faster (using LZW
+    %   or the default PackBits 'CompressionType'). See below for a list of
+    %   other supported property names and assosciated values.
     %
     %   Methods:
     %       close              - Close file after writing movie data.
@@ -43,11 +43,18 @@ classdef QTWriter < handle
     %                            (Photo PNG only). (Read-only, based on the
     %                            movie format and the ColorSpace and
     %                            Transparency properties).
-    %       CompressionMode    - String indicating the type of movie
-    %                            compression. The Photo PNG and Photo TIFF
-    %                            formats only support 'lossless' compression and
-    %                            the Photo JPEG format only supports 'lossy'
-    %                            compression. (Read-only).
+    %       CompressionMode    - String indicating if the selected movie format
+    %                            is 'lossy' or 'lossless'. The Photo PNG and
+    %                            Photo TIFF formats only support lossless
+    %                            compression and the Photo JPEG format only
+    %                            supports lossy compression. (Read-only).
+    %       CompressionType    - String indicating the type compression to use
+    %                            (Photo TIFF only). Supported algorithms are
+    %                            'lzw', 'none', and 'packbits' (default).
+    %                            PackBits compression will yield larger file
+    %                            sizes compared to LZW compression, but writing
+    %                            each frame is faster overall. (Read-only,
+    %                            specified in the object constructor).
     %       Duration           - Current movie duration in seconds, based on the
     %                            value of TimeScale and the FrameRate for each
     %                            frame. (Read-only).
@@ -172,6 +179,7 @@ classdef QTWriter < handle
         ColorChannels
         ColorSpace
         CompressionMode
+        CompressionType
         Duration
         FileName
         FrameCount = 0;
@@ -229,6 +237,8 @@ classdef QTWriter < handle
             MovieObject.ColorSpace = MovieObject.MovieProfile.ImageColorSpace;
             MovieObject.CompressionMode = ...
                 MovieObject.MovieProfile.ImageCompressionMode;
+            MovieObject.CompressionType = ...
+                MovieObject.MovieProfile.ImageCompressionType;
             MovieObject.Duration = 0;
             MovieObject.FrameRate = MovieObject.MovieProfile.MovieFrameRate;
             MovieObject.Loop = MovieObject.MovieProfile.MovieLoop;
@@ -637,6 +647,7 @@ classdef QTWriter < handle
             validPropertyNames = {	'BitDepth',...
                                     'ColorSpace',...
                                     'CompressionMode',...
+                                    'CompressionType',...
                                     'FrameRate',...
                                     'Loop',...
                                     'MovieFormat',...
@@ -890,6 +901,16 @@ classdef QTWriter < handle
                                 'is a lossless compression format.']);
                     end
                     
+                    % Set Compression Type
+                    movieProfile.ImageCompressionType = 'deflate';
+                    if ~isempty(parameters.CompressionType) && ...
+                            ~any(strcmpi(parameters.CompressionType,{'png',...
+                            'deflate','default'}))
+                        warning('QTWriter:createMovieProfile:CompressionTypeNotSupportedPNG',...
+                               ['The CompressionType property is not ' ...
+                                'supported for Photo PNG format movies.']);
+                    end
+                    
                     % Set Bit Depth
                     movieProfile.ImageBitDepth = 8;
                     if ~isempty(parameters.BitDepth) && ...
@@ -978,6 +999,16 @@ classdef QTWriter < handle
                                 movieProfile.MovieFormat);
                     end
                     
+                    % Set Compression Type
+                    movieProfile.ImageCompressionType = 'jpeg';
+                    if ~isempty(parameters.CompressionType) && ...
+                            ~any(strcmpi(parameters.CompressionType,{'jpg',...
+                            'jpeg','default'}))
+                        warning('QTWriter:createMovieProfile:CompressionTypeNotSupportedJPG',...
+                               ['The CompressionType property is not ' ...
+                                'supported for Photo JPEG format movies.']);
+                    end
+                    
                     % Set Bit Depth
                     movieProfile.ImageBitDepth = 8;
                     if ~isempty(parameters.BitDepth) && ...
@@ -1058,8 +1089,25 @@ classdef QTWriter < handle
                         warning('QTWriter:createMovieProfile:LossyNotSupportedTIF',...
                                ['The CompressionMode property is not ' ...
                                 'supported for Photo TIFF format movies. '...
-                                'Lossless packbit compression is used for '...
-                                'the TIFF format.']);
+                                'Use the ''CompressionType'' parameter to '...
+                                'specify the type of lossless compression.']);
+                    end
+                    
+                    % Set Compression Type
+                    ctype = lower(parameters.CompressionType);
+                    if isempty(ctype) || any(strcmp(ctype,{'default',....
+                            'packbits'}))
+                        movieProfile.ImageCompressionType = 'packbits';
+                    else
+                        if any(strcmp(ctype,{'none','lzw'}))
+                            movieProfile.ImageCompressionType = ctype;
+                        else
+                            error('QTWriter:createMovie:InvalidCompressionType',...
+                                 ['The CompressionType for Photo TIFF '...
+                                  'format movies, if specified, must be '...
+                                  '''packbits'' (default), ''lzw'', or '...
+                                  '''none''.']);
+                        end
                     end
                     
                     % Set Bit Depth
@@ -1112,7 +1160,8 @@ classdef QTWriter < handle
                     movieProfile.TmpImageWriteFunction = ...
                         @(frame,filename)feval(ImageFormat.write,...
                         frame(:,:,1:movieProfile.ImageColorChannels),...
-                        [],filename);
+                        [],filename,...
+                        'compression',movieProfile.ImageCompressionType);
                 otherwise
                     error('QTWriter:createMovieProfile:InvalidMovieFormat',...
                          ['An unknown MovieFormat, ''%s'', was specified. '...
