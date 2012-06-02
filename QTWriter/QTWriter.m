@@ -14,7 +14,7 @@ classdef QTWriter < handle
     %   be specified via the 'MovieFormat' property. The lossless 'Photo TIFF'
     %   format yields larger file sizes than Photo PNG, but is faster (using LZW
     %   or the default PackBits 'CompressionType'). See below for a list of
-    %   other supported property names and assosciated values.
+    %   other supported property names and associated values.
     %
     %   Methods:
     %       close              - Close file after writing movie data.
@@ -155,7 +155,7 @@ classdef QTWriter < handle
     %       http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF
     
     %   QTWriter saves temporary images to disk via the writMovie method. These
-    %   images are assembled into a movie when the close mothod is called. The
+    %   images are assembled into a movie when the close method is called. The
     %   full QuickTime header is written at the beginning of the movie file.
     %   Clearing the QTWriter object or calling close calls the delete method,
     %   which attempts to remove all of the temporary images and assosciated
