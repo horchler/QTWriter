@@ -58,7 +58,7 @@ classdef QTWriter < handle
     %       Duration           - Current movie duration in seconds, based on the
     %                            value of TimeScale and the FrameRate for each
     %                            frame. (Read-only).
-    %       Filename           - String specifying the name (and, optionally,
+    %       FileName           - String specifying the name (and, optionally,
     %                            the path) of the movie file. (Read-only,
     %                            specified in the object constructor).
     %       FrameCount         - Number of frames written to the movie file.
@@ -162,7 +162,7 @@ classdef QTWriter < handle
     %   memory used by the object.
     
     %   Andrew D. Horchler, adh9 @ case . edu
-    %   Created: 10-3-11, Revision: 1.1, 5-26-12
+    %   Created: 10-3-11, Revision: 1.1, 6-1-12
     %   CC BY-SA, Creative Commons Attribution-ShareAlike License
     %   http://creativecommons.org/licenses/by-sa/3.0/
     
@@ -205,7 +205,7 @@ classdef QTWriter < handle
         MovieFileName = '';	% The name of the movie file to be written
         MovieFilePath = '';	% The path to the movie file to be written
         MovieProfile = [];
-        TmpImageFiles = {};
+        TmpImgName = '';
     end
     
     methods
@@ -226,6 +226,7 @@ classdef QTWriter < handle
             [filePath file fileExtension] = fileparts(filename);
             MovieObject.MovieFileName = [file fileExtension];
             MovieObject.MovieFilePath = filePath;
+            MovieObject.TmpImgName = tempname;
             
             % Create movie profile
             MovieObject.MovieProfile = QTWriter.createMovieProfile(varargin);
@@ -320,7 +321,7 @@ classdef QTWriter < handle
                 
                 % Open movie file
                 [MovieObject(i).MovieFileID,fidMessage] = ...
-                    fopen(MovieObject(i).MovieFileName,'wb');
+                    fopen(MovieObject(i).FileName,'wb');
                 if MovieObject(i).MovieFileID < 0
                     error('QTWriter:close:CannotCreateFile',...
                          ['Cannot create file %s. The reason given '...
@@ -333,7 +334,8 @@ classdef QTWriter < handle
                 
                 % Write frames
                 for j = 1:MovieObject(i).FrameCount
-                    fid = fopen(MovieObject(i).TmpImageFiles{j});
+                    TmpImageFile = [MovieObject(i).TmpImgName int2str(j)];
+                    fid = fopen(TmpImageFile,'r+');
                     if fid < 0
                         error('QTWriter:close:CannotReopenTmpImgFile',...
                               'Could not reopen temporary image file.');
@@ -344,12 +346,11 @@ classdef QTWriter < handle
                         fwrite(MovieObject(i).MovieFileID,data,'uchar');
                     end
                     fclose(fid);
-                    delete(MovieObject(i).TmpImageFiles{j});
+                    delete(TmpImageFile);
                 end
                 
                 fclose(MovieObject(i).MovieFileID);
                 MovieObject(i).MovieFileID = [];
-                MovieObject(i).TmpImageFiles = {};
             end
             
             % Clean up
@@ -490,14 +491,12 @@ classdef QTWriter < handle
                 MovieObject.MeanFrameRate = ...
                     MovieObject.MeanFrameRate+(framerate-...
                     MovieObject.MeanFrameRate)/MovieObject.FrameCount;
-                MovieObject.TmpImageFiles{...
-                    MovieObject.FrameCount} = tempname;
-                
+                TmpImageFile = [MovieObject.TmpImgName ...
+                    int2str(MovieObject.FrameCount)];
                 MovieObject.MovieProfile.TmpImageWriteFunction(frame,...
-                    MovieObject.TmpImageFiles{MovieObject.FrameCount});
+                    TmpImageFile);
                 
-                fid = fopen(MovieObject.TmpImageFiles{...
-                    MovieObject.FrameCount});
+                fid = fopen(TmpImageFile,'r+');
                 if fid < 0
                     error('QTWriter:writeFrames:CannotReopenTmpImgFile',...
                           'Could not reopen temporary image file.');

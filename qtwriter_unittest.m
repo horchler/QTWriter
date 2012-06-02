@@ -2,17 +2,20 @@ function qtwriter_unittest(clearfiles)
 %QTWRITER_UNITTEST  Suite of unit tests for QTWriter class
 %   QTWRITER_UNITTEST locates and adds the QTWriter class to the Matlab path if
 %   necessary and runs a series of tests. Each test outputs a short demo movie
-%   file to the current directory. Various permutations of movie formats and
-%   movie properties are evaluated. The movie files should be opened in
-%   QuickTime Player to confirm their validity. Upon successful completetion of
-%   the tests, the QTWriter class is removed from the path if it had been added.
-%   See the contents of this function for the details of each test.
+%   file to the 'Unit Test Movies' directory in the current directory (if the
+%   'Unit Test Movies' directory does not exist, it will be created). Various
+%   permutations of movie formats and movie properties are evaluated. The movie
+%   files should be opened in QuickTime Player to confirm their validity. Upon
+%   successful completion of the tests, the QTWriter class is removed from the
+%   path if it had been added. See the contents of this function for the details
+%   of each test.
 %
-%   QTWRITER_UNITTEST(CLEARFILES) deletes the output movie file after each test.
-%   The input CLEARFILES is a logical value (TRUE or FALSE).
+%   QTWRITER_UNITTEST(CLEARFILES) writes the movie file to a tempfile and
+%   deletes this output file after each test. The input CLEARFILES is a logical
+%   value (TRUE or FALSE).
 
 %   Andrew D. Horchler, adh9 @ case . edu
-%   Created: 4-30-12, Modified: 5-26-12
+%   Created: 4-30-12, Modified: 6-1-12
 %   CC BY-SA, Creative Commons Attribution-ShareAlike License
 %   http://creativecommons.org/licenses/by-sa/3.0/
 
@@ -48,507 +51,218 @@ elseif ~islogical(clearfiles)
           'Input argument must be a logical value (true or false).');
 end
 
+% Create movie directory if needed
+if clearfiles
+    tmp_moviename = tempname;
+else
+    movie_dir = dir('Unit Test Movies');
+    if isempty(movie_dir)
+        mkdir('Unit Test Movies');
+    end
+end
 
-% Create an animation
 tic
-hf = figure;
-Z = peaks(19);
-surf(Z);
-frames = 4;
-axis tight;
-set(gca,'nextplot','replacechildren');
 tests = 0;
-
+hf = figure;
 
 % Try block to ensure path is reset
 try
 
 % Default PNG compression
-movObj = QTWriter('peaks_png_default.mov');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_default.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_default.mov';
 end
+movObj = QTWriter(moviefile);
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % PNG compression, grayscale input, rgb output
-movObj = QTWriter('peaks_png_rgb_grayinput.mov','Colorspace','rgb');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,rgb2gray(frame2im(getframe(hf))));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_rgb_grayinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_rgb_grayinput.mov';
 end
+movObj = QTWriter(moviefile,'Colorspace','rgb');
+outputmovie(movObj,clearfiles)
 tests = tests+1;
 
 
 % PNG compression, rgb input (no alpha), rgb plus transparency output
-movObj = QTWriter('peaks_png_transparency_rgbinput.mov','Transparency',true);
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_transparency_rgbinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_transparency_rgbinput.mov';
 end
+movObj = QTWriter(moviefile,'Transparency',true);
+outputmovie(movObj,clearfiles)
 tests = tests+1;
 
 
 % PNG compression, rgb input (no alpha), gray rgb plus transparency output
-movObj = QTWriter('peaks_png_gray_transparency_rgbinput.mov',...
-    'Transparency',true,'ColorSpace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_gray_transparency_rgbinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_gray_transparency_rgbinput.mov';
 end
+movObj = QTWriter(moviefile,'Transparency',true,'ColorSpace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % PNG compression, gray input (no alpha), gray rgb plus transparency output
-movObj = QTWriter('peaks_png_gray_transparency_grayinput.mov',...
-    'Transparency',true,'ColorSpace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,rgb2gray(frame2im(getframe(hf))));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_gray_transparency_grayinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_gray_transparency_grayinput.mov';
 end
+movObj = QTWriter(moviefile,'Transparency',true,'ColorSpace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % PNG compression, grayscale input (no alpha), rgb plus transpareny ouptut
-movObj = QTWriter('peaks_png_transparency_grayinput.mov','Transparency',true);
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,rgb2gray(frame2im(getframe(hf))));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_transparency_grayinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_transparency_grayinput.mov';
 end
+movObj = QTWriter(moviefile,'Transparency',true);
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % PNG compression, grascale input, grayscale ouput
-movObj = QTWriter('peaks_png_gray.mov','Colorspace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,rgb2gray(frame2im(getframe(hf))));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_gray.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_gray.mov';
 end
+movObj = QTWriter(moviefile,'Colorspace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % PNG compression, rgb input, grayscale ouput
-movObj = QTWriter('peaks_png_gray_rgbinput.mov','Colorspace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_png_gray_rgbinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_png_gray_rgbinput.mov';
 end
+movObj = QTWriter(moviefile,'Colorspace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % Photo JPEG compression
-movObj = QTWriter('peaks_jpg_default.mov','MovieFormat','Photo JPEG');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_jpg_default.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_jpg_default.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo JPEG');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % Photo JPEG compression, Quality 50
-movObj = QTWriter('peaks_jpg_50.mov','MovieFormat','Photo JPEG','Quality',50);
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_jpg_50.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_jpg_50.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo JPEG','Quality',50);
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % Photo JPEG compression, rgb input, grayscale output
-movObj = QTWriter('peaks_jpg_gray.mov','MovieFormat','Photo JPEG',...
-    'ColorSpace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_jpg_gray.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_jpg_gray.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo JPEG',...
+    'ColorSpace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % Photo TIFF compression
-movObj = QTWriter('peaks_tif_default.mov','MovieFormat','Photo TIFF');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_tif_default.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_tif_default.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo TIFF');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % TIFF compression, grayscale input, rgb output
-movObj = QTWriter('peaks_tif_rgb_grayinput.mov','MovieFormat','Photo TIFF',...
-    'Colorspace','rgb');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,rgb2gray(frame2im(getframe(hf))));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_tif_rgb_grayinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_tif_rgb_grayinput.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo TIFF','Colorspace','rgb');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % TIFF compression, grascale input, grayscale ouput
-movObj = QTWriter('peaks_tif_gray.mov','MovieFormat','Photo TIFF',...
-    'Colorspace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,rgb2gray(frame2im(getframe(hf))));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_tif_gray.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_tif_gray.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo TIFF',...
+    'Colorspace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % TIFF compression, rgb input, grayscale ouput
-movObj = QTWriter('peaks_tif_gray_rgbinput.mov','MovieFormat','Photo TIFF',...
-    'Colorspace','grayscale');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_tif_gray_rgbinput.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_tif_gray_rgbinput.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo TIFF',...
+    'Colorspace','grayscale');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % TIFF compression, uncompressed
-movObj = QTWriter('peaks_tif_none.mov','MovieFormat','Photo TIFF',...
-    'CompressionType','none');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_tif_none.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_tif_none.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo TIFF',...
+    'CompressionType','none');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 % TIFF compression, LZW compression type
-movObj = QTWriter('peaks_tif_lzw.mov','MovieFormat','Photo TIFF',...
-    'CompressionType','lzw');
-
-% Animate plot and write movie
-for k = 0:frames
-	surf(sin(2*pi*k/frames)*Z,Z);
-
-	% Vary the frame-rate
-	movObj.FrameRate = k;
-
-	% Write each frame to the file
-	writeMovie(movObj,getframe(hf));
-end
- 
-% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
-movObj.Loop = 'backandforth';
-movObj.PlayAllFrames = true;
-movObj.TimeScale = 1e3;
-     
-% Finish writing movie, close file, and clear object
-close(movObj);
-clear movObj;
 if clearfiles
-    delete('peaks_tif_lzw.mov');
+    moviefile = [tmp_moviename int2str(tests) '.mov'];
+else
+    moviefile = 'Unit Test Movies/peaks_tif_lzw.mov';
 end
+movObj = QTWriter(moviefile,'MovieFormat','Photo TIFF',...
+    'CompressionType','lzw');
+outputmovie(movObj,clearfiles);
 tests = tests+1;
 
 
 toc
 disp(['All ' num2str(tests) ' unit tests passed.'])
+close(hf);
 
 % Reset path to prior state if directory was added
 if pathadded
@@ -556,8 +270,8 @@ if pathadded
 end
 
 catch err
+    close(hf);
     clear movObj;
-    close hf;
     
     % Reset path to prior state if directory was added
     if pathadded
@@ -566,3 +280,33 @@ catch err
     
     rethrow(err);
 end
+
+function outputmovie(movObj,clearfiles)
+Z = peaks(19);
+surf(Z);
+frames = 4;
+axis tight;
+set(gca,'nextplot','replacechildren');
+
+% Animate plot and write movie
+for k = 0:frames
+	surf(sin(2*pi*k/frames)*Z,Z);
+
+	% Vary the frame-rate
+	movObj.FrameRate = k;
+
+	% Write each frame to the file
+	writeMovie(movObj,getframe(gcf));
+end
+ 
+% Set palindromic looping flag, Play All Frames flag, and Time-scale parameter
+movObj.Loop = 'backandforth';
+movObj.PlayAllFrames = true;
+movObj.TimeScale = 1e3;
+     
+% Finish writing movie, close file, and clear object
+if clearfiles
+    delete(movObj.FileName);
+end
+close(movObj);
+clear movObj;
