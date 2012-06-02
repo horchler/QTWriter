@@ -162,7 +162,7 @@ classdef QTWriter < handle
     %   memory used by the object.
     
     %   Andrew D. Horchler, adh9 @ case . edu
-    %   Created: 10-3-11, Revision: 1.1, 6-1-12
+    %   Created: 10-3-11, Revision: 1.1, 6-2-12
     %   CC BY-SA, Creative Commons Attribution-ShareAlike License
     %   http://creativecommons.org/licenses/by-sa/3.0/
     
@@ -267,11 +267,10 @@ classdef QTWriter < handle
             
             for i = 1:length(MovieObject)
                 % Delete temporary images
-                if ~isempty(MovieObject(i).TmpImageFiles)
-                    for j = 1:MovieObject(i).FrameCount
-                        if exist(MovieObject(i).TmpImageFiles{j},'file') > 0
-                            delete(MovieObject(i).TmpImageFiles{j});
-                        end
+                for j = 1:MovieObject(i).FrameCount
+                    TmpImageFile = [MovieObject(i).TmpImgName int2str(j)];
+                    if exist(TmpImageFile,'file') > 0
+                        delete(TmpImageFile);
                     end
                 end
                 
