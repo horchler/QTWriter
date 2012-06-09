@@ -38,31 +38,31 @@
 <h3>Example:</h3>
 <div class="highlight">
 <pre>
-<span style="color:green">% Prepare new movie file using the default PNG compression</span>
-movObj = QTWriter(<span style="color:purple">'peaks.mov'</span>);
+<span style="color:forestgreen">% Prepare new movie file using the default PNG compression</span>
+movObj = QTWriter(<span style="color:#A020F0">'peaks.mov'</span>);
 
-<span style="color:green">% Create an animation</span>
+<span style="color:forestgreen">% Create an animation</span>
 hf = figure; Z = peaks; surfc(Z); frames = 100;
-axis tight; set(hf,<span style="color:purple">'DoubleBuffer'</span>,<span style="color:purple">'on'</span>);
-set(gca,<span style="color:purple">'nextplot'</span>,<span style="color:purple">'replacechildren'</span>);
+axis tight; set(hf,<span style="color:#A020F0">'DoubleBuffer'</span>,<span style="color:#A020F0">'on'</span>);
+set(gca,<span style="color:#A020F0">'nextplot'</span>,<span style="color:#A020F0">'replacechildren'</span>);
      
-<span style="color:green">% Animate plot and write movie</span>
+<span style="color:forestgreen">% Animate plot and write movie</span>
 <span style="color:blue">for</span> k = 0:frames
     hs = surfc(sin(2*pi*k/frames)*Z,Z);
-    set(hs,<span style="color:purple">'FaceColor'</span>,<span style="color:purple">'interp'</span>,<span style="color:purple">'FaceLighting'</span>,<span style="color:purple">'phong'</span>);
-    light(<span style="color:purple">'Position'</span>,[0 0 4]);
+    set(hs,<span style="color:#A020F0">'FaceColor'</span>,<span style="color:#A020F0">'interp'</span>,<span style="color:#A020F0">'FaceLighting'</span>,<span style="color:#A020F0">'phong'</span>);
+    light(<span style="color:#A020F0">'Position'</span>,[0 0 4]);
     
-    <span style="color:green">% Vary the frame-rate</span>
+    <span style="color:forestgreen">% Vary the frame-rate</span>
     movObj.FrameRate = k;
     
-    <span style="color:green">% Write each frame to the file</span>
+    <span style="color:forestgreen">% Write each frame to the file</span>
     writeMovie(movObj,getframe(hf));
 <span style="color:blue">end</span>
 
-<span style="color:green">% Set palindromic looping flag</span>
-movObj.Loop = <span style="color:purple">'backandforth'</span>;
+<span style="color:forestgreen">% Set palindromic looping flag</span>
+movObj.Loop = <span style="color:#A020F0">'backandforth'</span>;
 
-<span style="color:green">% Finish writing movie and close file</span>
+<span style="color:forestgreen">% Finish writing movie and close file</span>
 close(movObj);
 </pre>
 </div>
