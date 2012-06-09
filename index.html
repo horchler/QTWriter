@@ -39,30 +39,30 @@
 <div class="highlight">
 <pre>
 <span style="color:green">% Prepare new movie file using the default PNG compression</span>
-movObj = QTWriter('peaks.mov');
+movObj = QTWriter(<span style="color:magenta">'peaks.mov'</span>);
 
-% Create an animation
+<span style="color:green">% Create an animation</span>
 hf = figure; Z = peaks; surfc(Z); frames = 100;
-axis tight; set(hf,'DoubleBuffer','on');
-set(gca,'nextplot','replacechildren');
+axis tight; set(hf,<span style="color:magenta">'DoubleBuffer'</span>,<span style="color:magenta">'on'</span>);
+set(gca,<span style="color:magenta">'nextplot'</span>,<span style="color:magenta">'replacechildren'</span>);
      
-% Animate plot and write movie
-for k = 0:frames
+<span style="color:green">% Animate plot and write movie</span>
+<span style="color:blue">for</span> k = 0:frames
     hs = surfc(sin(2*pi*k/frames)*Z,Z);
-    set(hs,'FaceColor','interp','FaceLighting','phong');
-    light('Position',[0 0 4]);
+    set(hs,<span style="color:magenta">'FaceColor'</span>,<span style="color:magenta">'interp'</span>,<span style="color:magenta">'FaceLighting'</span>,<span style="color:magenta">'phong'</span>);
+    light(<span style="color:magenta">'Position'</span>,[0 0 4]);
     
-    % Vary the frame-rate
+    <span style="color:green">% Vary the frame-rate</span>
     movObj.FrameRate = k;
     
-    % Write each frame to the file
+    <span style="color:green">% Write each frame to the file</span>
     writeMovie(movObj,getframe(hf));
-end
+<span style="color:magenta">end</span>
 
-% Set palindromic looping flag
-movObj.Loop = 'backandforth';
+<span style="color:green">% Set palindromic looping flag</span>
+movObj.Loop = <span style="color:magenta">'backandforth'</span>;
 
-% Finish writing movie and close file
+<span style="color:green">% Finish writing movie and close file</span>
 close(movObj);
 </pre>
 </div>
