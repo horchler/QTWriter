@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Qtwriter by horchler</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Qtwriter</h1>
+        <p>Export QuickTime Movies with Matlab</p>
+        <p class="view"><a href="https://github.com/horchler/QTWriter">View the Project on GitHub <small>horchler/QTWriter</small></a></p>
+        <ul>
+          <li><a href="https://github.com/horchler/QTWriter/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/horchler/QTWriter/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/horchler/QTWriter">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>QTWriter</h1>
+
+<h6>Version 1.1, 6-9-12</h6>
+
+<h5>Export QuickTime Movies with Matlab</h5>
+
+<p><code>OBJ = QTWriter(FILENAME)</code> constructs a QTWriter object to write QuickTime movie data to a '.mov' file using lossless Photo PNG compression. <code>FILENAME</code> is a string enclosed in single quotation marks that specifies the name of the file to create. If <code>FILENAME</code> does not include an extension the QTWriter constructor appends the '.mov' extension. <code>FILENAME</code> can include an absolute or relative path.</p>
+
+<p><code>OBJ = QTWriter(...,'PropertyName','PropertyValue',...)</code> specifies options via property name-value pairs. In addition to the default <code>'Photo PNG'</code> compression, <code>'Photo TIFF'</code> and <code>'Photo JPEG'</code> formats can be specified via the <code>'MovieFormat'</code> property. Lossless Photo TIFF compression yields larger file sizes than Photo PNG, but is faster (using <code>'LZW'</code> or the default <code>'PackBits'</code> <code>'CompressionType'</code>). Photo JPEG is a lossy format and the <code>'Quality'</code> property can be used to specify the level of compression to use. The <code>'ColorSpace'</code> property specifies if the movie is to be output as 24-bit RGB truecolor or 8-bit grayscale. The <code>'Transparency'</code> property indicates if the movie is to be output with an alpha channel (Photo PNG format only).</p>
+
+<p>Frames are written via the <code>writeMovie(FRAME)</code> method of the QTWriter object. The frame rate of the movie can be continuously varied via the <code>'FrameRate'</code> property of the QTWriter object (see <code>STRPENDDEMO</code>). The looping behavior of the output movie can be specified via the 'Loop' property of the QTWriter object: <code>'none'</code>, <code>'loop'</code>, or <code>'backandforth'</code>. Finally, the output movie can be forced to play every frame via the <code>'PlayAllFrames'</code> property of the QTWriter object. The <code>close()</code> method of the QTWriter object is called to finish writing the movie and clean up associated data.</p>
+
+<hr><p>Copyright © Andrew D. Horchler, adh9 @ case . edu<br>
+Created: 10-3-11, Revision: 1.1, 6-9-12<br>
+CC BY-SA, Creative Commons Attribution-ShareAlike License<br><a href="http://creativecommons.org/licenses/by-sa/3.0/">http://creativecommons.org/licenses/by-sa/3.0/</a></p>
+
+<p>QTWriter is inspired by <code>MakeQTMovie</code> by Malcolm Slaney (Interval Research, March 1999) and parts are based on the <code>VideoWriter</code> class in Matlab R2011b.</p>
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/">https://engineering.purdue.edu/~malcolm/interval/1999-066/</a></li>
+<li><a href="http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF">http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF</a></li>
+</ul><p>This version tested with Matlab 7.14.0.739 (R2012a)<br>
+Mac OS X 10.6.8 Build: 10K549, Java 1.6.0_31-b04-415-10M3635<br>
+Compatibility maintained back through Matlab 7.4 (R2007a)</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/horchler">horchler</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
