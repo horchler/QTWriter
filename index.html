@@ -35,7 +35,41 @@
 
 <p>Frames are written via the <code>writeMovie(FRAME)</code> method of the QTWriter object. The frame rate of the movie can be continuously varied via the <code>'FrameRate'</code> property of the QTWriter object (see <code>STRPENDDEMO</code>). The looping behavior of the output movie can be specified via the 'Loop' property of the QTWriter object: <code>'none'</code>, <code>'loop'</code>, or <code>'backandforth'</code>. Finally, the output movie can be forced to play every frame via the <code>'PlayAllFrames'</code> property of the QTWriter object. The <code>close()</code> method of the QTWriter object is called to finish writing the movie and clean up associated data.</p>
 
-<hr><p>Copyright © Andrew D. Horchler, adh9 @ case . edu<br>
+<h3>Example:</h3>
+<div class="highlight">
+<pre>
+% Prepare new movie file using the default PNG compression
+movObj = QTWriter('peaks.mov');
+
+% Create an animation
+hf = figure; Z = peaks; surfc(Z); frames = 100;
+axis tight; set(hf,'DoubleBuffer','on');
+set(gca,'nextplot','replacechildren');
+     
+% Animate plot and write movie
+for k = 0:frames
+    hs = surfc(sin(2*pi*k/frames)*Z,Z);
+    set(hs,'FaceColor','interp','FaceLighting','phong');
+    light('Position',[0 0 4]);
+    
+    % Vary the frame-rate
+    movObj.FrameRate = k;
+    
+    % Write each frame to the file
+    writeMovie(movObj,getframe(hf));
+end
+
+% Set palindromic looping flag
+movObj.Loop = 'backandforth';
+
+% Finish writing movie and close file
+close(movObj);
+</pre>
+</div>
+
+<hr>
+
+<p>Copyright © Andrew D. Horchler, adh9 @ case . edu<br>
 Created: 10-3-11, Revision: 1.1, 6-9-12<br>
 CC BY-SA, <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a></p>
 
