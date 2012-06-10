@@ -25,10 +25,9 @@ CC BY-SA, [Creative Commons Attribution-ShareAlike License](http://creativecommo
 QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  
 parts are based on the [```VideoWriter```](http://www.mathworks.com/help/techdoc/ref/videowriterclass.html) class in Matlab R2011b.
     
-References:
- - [MakeQTMovie - Create QuickTime movies in Matlab](https://engineering.purdue.edu/~malcolm/interval/1999-066/)
- - [QuickTime File Format Specification](http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF)
-&nbsp;  
+References:  
+&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[MakeQTMovie - Create QuickTime movies in Matlab](https://engineering.purdue.edu/~malcolm/interval/1999-066/)
+&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[QuickTime File Format Specification](http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF)  
 &nbsp;  
 
 This version tested with Matlab 7.14.0.739 (R2012a)  
