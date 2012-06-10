@@ -3,13 +3,15 @@ QTWriter
 ######Version 1.1, 6-9-12######
 #####Export QuickTime Movies with Matlab#####
 
-```OBJ = QTWriter(FILENAME)``` constructs a QTWriter object to write QuickTime movie data to a '.mov' file using lossless Photo PNG compression. ```FILENAME``` is a string enclosed in single quotation marks that specifies the name of the file to create. If ```FILENAME``` does not include an extension the QTWriter constructor appends the '.mov' extension. ```FILENAME``` can include an absolute or relative path.
+[```OBJ = QTWriter(FILENAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m) constructs a QTWriter object to write QuickTime movie data to a '.mov' file using lossless Photo PNG compression. ```FILENAME``` is a string enclosed in single quotation marks that specifies the name of the file to create. If ```FILENAME``` does not include an extension the QTWriter constructor appends the '.mov' extension. ```FILENAME``` can include an absolute or relative path.
 
 ```OBJ = QTWriter(...,'PropertyName','PropertyValue',...)``` specifies options via property name-value pairs. In addition to the default ```'Photo PNG'``` compression, ```'Photo TIFF'``` and ```'Photo JPEG'``` formats can be specified via the ```'MovieFormat'``` property. Lossless Photo TIFF compression yields larger file sizes than Photo PNG, but is faster (using ```'LZW'``` or the default ```'PackBits'``` ```'CompressionType'```). Photo JPEG is a lossy format and the ```'Quality'``` property can be used to specify the level of compression to use. The ```'ColorSpace'``` property specifies if the movie is to be output as 24-bit RGB truecolor or 8-bit grayscale. The ```'Transparency'``` property indicates if the movie is to be output with an alpha channel (Photo PNG format only).
 
 Frames are written via the ```writeMovie(FRAME)``` method of the QTWriter object. The frame rate of the movie can be continuously varied via the ```'FrameRate'``` property of the QTWriter object (see [```STRPENDDEMO```](https://github.com/horchler/QTWriter/blob/master/strpenddemo.m)). The looping behavior of the output movie can be specified via the 'Loop' property of the QTWriter object: ```'none'```, ```'loop'```, or ```'backandforth'```. Finally, the output movie can be forced to play every frame via the ```'PlayAllFrames'``` property of the QTWriter object. The ```close()``` method of the QTWriter object is called to finish writing the movie and clean up associated data.
 
-View example code and sample output movies on the project website: http://horchler.github.com/QTWriter/  
+View demo code and example exported movies on the project website: http://horchler.github.com/QTWriter/  
+
+Download just the QTWriter class and STRPENDDEMO M-files as a [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (17.3 KB).
 
 --------
   
@@ -17,7 +19,8 @@ Copyright &copy; Andrew D. Horchler, adh9 @ case . edu
 Created: 10-3-11, Revision: 1.1, 6-9-12  
 CC BY-SA, [Creative Commons Attribution-ShareAlike License](http://creativecommons.org/licenses/by-sa/3.0/)  
   
-QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and parts are based on the [```VideoWriter```](http://www.mathworks.com/help/techdoc/ref/videowriterclass.html) class in Matlab R2011b.
+QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  
+parts are based on the [```VideoWriter```](http://www.mathworks.com/help/techdoc/ref/videowriterclass.html) class in Matlab R2011b.
     
 References:
  - [MakeQTMovie - Create QuickTime movies in Matlab](https://engineering.purdue.edu/~malcolm/interval/1999-066/)
