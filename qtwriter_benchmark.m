@@ -502,6 +502,13 @@ if clearfiles
 end
 
 
+if fid ~= 1 
+    st = fclose(fid);
+    if st ~= 0
+        error('QTWriter:qtwriter_benchmark:FileCloseUnsuccessful',...
+              'Unable to close file ''%s''',filename);
+    end
+end
 close(hf);
 disp(['Completed ' num2str(tests) ' benchmarks.'])
 
@@ -512,6 +519,7 @@ end
 
 catch err
     clear movObj;
+    fclose(fid);
     close(hf);
     
     % Reset path to prior state if directory was added
@@ -568,7 +576,11 @@ if fid == -1
     error('QTWriter:qtwriter_benchmark:validatefile:FileOpenError',...
           'Unable to open file ''%s'':\n\n%s',filename,fidMessage);
 end
-fclose(fid);
+st = fclose(fid);
+if st ~= 0
+    error('QTWriter:qtwriter_benchmark:validatefile:FileCloseUnsuccessful',...
+          'Unable to close file ''%s''',filename);
+end
 
 [success,info] = fileattrib(filename);	%#ok<*ASGLU>
 if usejava('jvm')
