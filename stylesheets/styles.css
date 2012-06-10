@@ -96,7 +96,7 @@ img {
 }
 
 header {
-  width:270px;
+  width:250px;
   float:left;
   position:fixed;
 }
@@ -118,7 +118,7 @@ header ul {
   border-radius:5px;
   border:1px solid #d2d2d2;
   box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
-  width:270px;
+  width:250px;
 }
 
 header li {
@@ -160,7 +160,7 @@ header ul a strong {
 }
 
 section {
-  width:520px;
+  width:560px;
   float:right;
   padding-bottom:50px;
 }
