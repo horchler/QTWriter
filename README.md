@@ -9,14 +9,15 @@ QTWriter
 
 Frames are written via the ```writeMovie(FRAME)``` method of the QTWriter object. The frame rate of the movie can be continuously varied via the ```'FrameRate'``` property of the QTWriter object (see ```STRPENDDEMO```). The looping behavior of the output movie can be specified via the 'Loop' property of the QTWriter object: ```'none'```, ```'loop'```, or ```'backandforth'```. Finally, the output movie can be forced to play every frame via the ```'PlayAllFrames'``` property of the QTWriter object. The ```close()``` method of the QTWriter object is called to finish writing the movie and clean up associated data.
 
+View example code and sample output movies on the projet website: http://horchler.github.com/QTWriter/  
+
 --------
   
 Copyright &copy; Andrew D. Horchler, adh9 @ case . edu  
 Created: 10-3-11, Revision: 1.1, 6-9-12  
-CC BY-SA, Creative Commons Attribution-ShareAlike License  
-http://creativecommons.org/licenses/by-sa/3.0/
+CC BY-SA, [http://creativecommons.org/licenses/by-sa/3.0/](Creative Commons Attribution-ShareAlike License)  
   
-QTWriter is inspired by ```MakeQTMovie``` by Malcolm Slaney (Interval Research, March 1999) and parts are based on the ```VideoWriter``` class in Matlab R2011b.
+QTWriter is inspired by ```[https://engineering.purdue.edu/~malcolm/interval/1999-066/](MakeQTMovie)``` by Malcolm Slaney (Interval Research, March 1999) and parts are based on the ```[http://www.mathworks.com/help/techdoc/ref/videowriterclass.html](VideoWriter)``` class in Matlab R2011b.
     
 References:
  - https://engineering.purdue.edu/~malcolm/interval/1999-066/
@@ -24,4 +25,5 @@ References:
 
 This version tested with Matlab 7.14.0.739 (R2012a)  
 Mac OS X 10.6.8 Build: 10K549, Java 1.6.0_31-b04-415-10M3635  
+QuickTime Player Pro 7.6.6 (1709) Version 1790, QuickTime Player X 10.0 (131)  
 Compatibility maintained back through Matlab 7.4 (R2007a)
