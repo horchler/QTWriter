@@ -1,7 +1,7 @@
 QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
-######Version 1.1, 4-25-13###### 
+######Version 1.1, 4-25-13######
 
 [```OBJ = QTWriter(FILENAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m) constructs a QTWriter object to write QuickTime movie data to a &ldquo;.mov&rdquo; file using lossless Photo PNG compression. ```FILENAME``` is a string enclosed in single quotation marks that specifies the name of the file to create. If ```FILENAME``` does not include an extension the QTWriter constructor appends the &ldquo;.mov&rdquo; extension. ```FILENAME``` can include an absolute or relative path.
 
