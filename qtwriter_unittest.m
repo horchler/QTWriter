@@ -15,9 +15,7 @@ function qtwriter_unittest(clearfiles)
 %   value (TRUE or FALSE).
 
 %   Andrew D. Horchler, adh9 @ case . edu
-%   Created: 4-30-12, Modified: 6-1-12
-%   CC BY-SA, Creative Commons Attribution-ShareAlike License
-%   http://creativecommons.org/licenses/by-sa/3.0/
+%   Created: 4-30-12, Modified: 4-25-13
 
 
 % Make sure QTWriter on path, otherwise ensure in right location and add it

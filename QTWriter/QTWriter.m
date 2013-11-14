@@ -37,7 +37,7 @@ classdef QTWriter < handle
     %                            opaque alpha channel added. (Read-only,
     %                            specified in the object constructor).
     %       ColorChannels      - Integer specifying the number of color channels
-    %                            in the output movie. 1 for grayscale movies,
+    %                            in the output movie: 1 for grayscale movies,
     %                            3 for truecolor RGB movies, and 4 for movies
     %                            where the Transparency property has been set
     %                            (Photo PNG only). (Read-only, based on the
@@ -162,35 +162,67 @@ classdef QTWriter < handle
     %   memory used by the object.
     
     %   Andrew D. Horchler, adh9 @ case . edu
-    %   Created: 10-3-11, Revision: 1.1, 6-2-12
-    %   CC BY-SA, Creative Commons Attribution-ShareAlike License
-    %   http://creativecommons.org/licenses/by-sa/3.0/
+    %   Created: 10-3-11, Revision: 1.1, 11-14-13
+    %
+    %   Copyright (c) 2012-2013, Andrew D. Horchler
+    %   All rights reserved.
+    %
+    %   Redistribution and use in source and binary forms, with or without
+    %   modification, are permitted provided that the following conditions are
+    %   met:
+    %     * Redistributions of source code must retain the above copyright
+    %       notice, this list of conditions and the following disclaimer.
+    %     * Redistributions in binary form must reproduce the above copyright
+    %       notice, this list of conditions and the following disclaimer in the
+    %       documentation and/or other materials provided with the distribution.
+    %     * Neither the name of Case Western Reserve University nor the names of
+    %       its contributors may be used to endorse or promote products derived
+    %       from this software without specific prior written permission.
+    %
+    %       THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    %       "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    %       LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+    %       FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ANDREW D.
+    %       HORCHLER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    %       EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+    %       PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    %       PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+    %       OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    %       (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+    %       USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+    %       DAMAGE.
     
+    
+    properties (SetAccess=private)
+        MovieFormat
+        FileName
+        ColorSpace
+        BitDepth
+        ColorChannels
+        Transparency
+        CompressionMode
+        CompressionType
+        Quality = 100;
+        Width = 0;
+        Height = 0;
+    end
     
     properties
         FrameRate = 20;
-        Loop = 'none';
-        PlayAllFrames = false;
-        TimeScale = 1e4;
     end
     
     properties (SetAccess=private)
-        BitDepth
-        ColorChannels
-        ColorSpace
-        CompressionMode
-        CompressionType
-        Duration
-        FileName
         FrameCount = 0;
-        Height = 0;
-        MaxFramRate;
         MeanFrameRate
+        MaxFramRate;
         MinFramRate
-        MovieFormat
-        Quality;
-        Transparency
-        Width = 0;
+        Duration = 0;
+    end
+    
+    properties
+        TimeScale = 1e4;
+        Loop = 'none';
+        PlayAllFrames = false;
     end
     
     properties (SetAccess=private,Hidden,Transient)
@@ -209,6 +241,7 @@ classdef QTWriter < handle
     end
     
     methods
+        
         function MovieObject = QTWriter(filename,varargin)
             if nargin < 1
                 error('QTWriter:QTWriter:NoFilename',...
@@ -223,7 +256,7 @@ classdef QTWriter < handle
             
             % Set public and private filename properties
             MovieObject.FileName = filename;
-            [filePath file fileExtension] = fileparts(filename);
+            [filePath,file,fileExtension] = fileparts(filename);
             MovieObject.MovieFileName = [file fileExtension];
             MovieObject.MovieFilePath = filePath;
             MovieObject.TmpImgName = tempname;
@@ -440,7 +473,9 @@ classdef QTWriter < handle
             MovieObject.writeFrames(frame);
         end
     end
-
+    
+    % ==========================================================================
+    
     methods (Access=private)
         function writeFrames(MovieObject,frames)
             dataType = class(frames);
@@ -533,40 +568,40 @@ classdef QTWriter < handle
             movieplayallframes = ...
                 QTWriter.checkPlayAllFrames(MovieObject.PlayAllFrames);
             
-            [stsd_a stsd_len] = QTWriter.stsd_atom(imageformatname,...
+            [stsd_a,stsd_len] = QTWriter.stsd_atom(imageformatname,...
                 imagequality,framewidth,frameheight,movieformatname,bitdepth,...
                 colorspace,transparency);
-            [stts_a stts_len] = QTWriter.stts_atom(framecount,sampleduration);
-            [stsc_a stsc_len] = QTWriter.stsc_atom();
-            [stsz_a stsz_len] = QTWriter.stsz_atom(framecount,framelengths);
-            [stco_a stco_len] = QTWriter.stco_atom(framestarts);
+            [stts_a,stts_len] = QTWriter.stts_atom(framecount,sampleduration);
+            [stsc_a,stsc_len] = QTWriter.stsc_atom();
+            [stsz_a,stsz_len] = QTWriter.stsz_atom(framecount,framelengths);
+            [stco_a,stco_len] = QTWriter.stco_atom(framestarts);
             stbl_len = stsd_len+stts_len+stsc_len+stsz_len+stco_len+8;
             
-            [vmhd_a vmhd_len] = QTWriter.vmhd_atom(transparency);
-            [hdlr_a2 hdlr_len2] = QTWriter.hdlr_atom('dhlr','alis',...
+            [vmhd_a,vmhd_len] = QTWriter.vmhd_atom(transparency);
+            [hdlr_a2,hdlr_len2] = QTWriter.hdlr_atom('dhlr','alis',...
                 'Apple Alias Data Handler');
-            [dinf_a dinf_len] = QTWriter.dinf_atom();
+            [dinf_a,dinf_len] = QTWriter.dinf_atom();
             minf_len = vmhd_len+hdlr_len2+dinf_len+stbl_len+8;
             
-            [mdhd_a mdhd_len] = QTWriter.mdhd_atom(time,timescale,duration);
-            [hdlr_a1 hdlr_len1] = QTWriter.hdlr_atom('mhlr','vide',...
+            [mdhd_a,mdhd_len] = QTWriter.mdhd_atom(time,timescale,duration);
+            [hdlr_a1,hdlr_len1] = QTWriter.hdlr_atom('mhlr','vide',...
                 'Apple Video Media Handler');
             mdia_len = mdhd_len+hdlr_len1+minf_len+8;
             
-            [tkhd_a tkhd_len] = QTWriter.tkhd_atom(time,duration,framewidth,...
+            [tkhd_a,tkhd_len] = QTWriter.tkhd_atom(time,duration,framewidth,...
                 frameheight);
-            [tapt_a tapt_len] = QTWriter.tapt_atom(framewidth,frameheight);
-            [edts_a edts_len] = QTWriter.edts_atom(duration);
-            [load_a load_len] = QTWriter.load_atom(preload);
+            [tapt_a,tapt_len] = QTWriter.tapt_atom(framewidth,frameheight);
+            [edts_a,edts_len] = QTWriter.edts_atom(duration);
+            [load_a,load_len] = QTWriter.load_atom(preload);
             trak_len = tkhd_len+tapt_len+edts_len+load_len+mdia_len+8;
             
-            [mvhd_a mvhd_len] = QTWriter.mvhd_atom(time,timescale,duration);
-            [udta_a udta_len] = QTWriter.udta_atom(movieloop,...
+            [mvhd_a,mvhd_len] = QTWriter.mvhd_atom(time,timescale,duration);
+            [udta_a,udta_len] = QTWriter.udta_atom(movieloop,...
                 movieplayallframes);
             moov_len = mvhd_len+trak_len+udta_len+8;
             
-            [ftyp_a ftyp_len] = QTWriter.ftyp_atom();
-            [wide_a wide_len] = QTWriter.wide_atom();
+            [ftyp_a,ftyp_len] = QTWriter.ftyp_atom();
+            [wide_a,wide_len] = QTWriter.wide_atom();
             
             framestarts = framestarts+moov_len+ftyp_len+wide_len+8;
             stco_a = QTWriter.stco_atom(framestarts);
@@ -598,6 +633,8 @@ classdef QTWriter < handle
                     QTWriter.mdat_atom(framelengths)];                          % Atom Header
         end
     end
+    
+    % ==========================================================================
 
     methods (Static,Access=private)
         function framerate=checkFrameRate(framerate)
@@ -1186,7 +1223,7 @@ classdef QTWriter < handle
                 QTWriter.checkPlayAllFrames(parameters.PlayAllFrames);
         end
         
-        function [height width]=getFrameSize(frame)
+        function [height,width]=getFrameSize(frame)
             if isstruct(frame)
                 height = size(frame(1).cdata,1);
                 width = size(frame(1).cdata,2);
@@ -1308,7 +1345,7 @@ classdef QTWriter < handle
             y = bitand(y(:)',255);
         end
         
-        function [atom len]=ctab_atom(table)
+        function [atom,len]=ctab_atom(table)
             n = size(table,1);
             nn = QTWriter.Bit32(n-1);
             table =table';
@@ -1329,7 +1366,7 @@ classdef QTWriter < handle
                         ctab(:)'];                          % Color array
         end
         
-        function [atom len]=dinf_atom()
+        function [atom,len]=dinf_atom()
             atom = [0 0 0 36 double('dinf') ...         % Atom Header
                         ...
                         0 0 0 28 double('dref') ...
@@ -1341,7 +1378,7 @@ classdef QTWriter < handle
             len = 36;
         end
         
-        function [atom len]=edts_atom(duration)
+        function [atom,len]=edts_atom(duration)
             atom = [0 0 0 36 double('edts') ...             % Atom Header
                         ...
                         0 0 0 28 double('elst') ...         % Atom Header
@@ -1353,12 +1390,12 @@ classdef QTWriter < handle
             len = 36;
         end
         
-        function [atom len]=free_atom()
+        function [atom,len]=free_atom()
              atom = [0 0 0 8 double('free')];   % Atom Header
              len = 8;
         end
         
-        function [atom len]=ftyp_atom()
+        function [atom,len]=ftyp_atom()
             atom = [0 0 0 24 double('ftyp') ...	% Atom Header
                         double('qt  ') ...  	% Major_Brand
                         32 5 3 0 ...           	% Minor_Version
@@ -1367,7 +1404,7 @@ classdef QTWriter < handle
             len = 24;
         end
         
-        function [atom len]=hdlr_atom(type,subtype,name)
+        function [atom,len]=hdlr_atom(type,subtype,name)
             n = length(name);
             len = n+33;
             atom = [QTWriter.Bit32(len) double('hdlr') ...	% Atom Header
@@ -1381,7 +1418,7 @@ classdef QTWriter < handle
                         double(name)];                      % Component name
         end
         
-        function [atom len]=load_atom(preload)
+        function [atom,len]=load_atom(preload)
             if preload
                 duration = [255 255 255 255];   % All frames
             else
@@ -1395,12 +1432,12 @@ classdef QTWriter < handle
             len = 24;
         end
         
-        function [atom len]=mdat_atom(framelengths)
+        function [atom,len]=mdat_atom(framelengths)
             len = sum(framelengths)+8;
             atom = [QTWriter.Bit32(len) double('mdat')];	% Atom Header
         end
         
-        function [atom len]=mdhd_atom(time,timescale,duration)
+        function [atom,len]=mdhd_atom(time,timescale,duration)
             atom = [0 0 0 32 double('mdhd') ...         % Atom Header
                         0 0 0 0 ...                     % Version, Flags
                         QTWriter.Bit32(time) ...       	% Creation time
@@ -1412,7 +1449,7 @@ classdef QTWriter < handle
             len = 32;
         end
         
-        function [atom len]=mvhd_atom(time,timescale,duration)
+        function [atom,len]=mvhd_atom(time,timescale,duration)
             atom = [0 0 0 108 double('mvhd') ...      	% Atom Header
                         0 0 0 0 ...                    	% Version, Flags
                         QTWriter.Bit32(time) ...      	% Creation time
@@ -1435,7 +1472,7 @@ classdef QTWriter < handle
             len = 108;
         end
         
-        function [atom len]=stco_atom(framestarts)
+        function [atom,len]=stco_atom(framestarts)
             n = length(framestarts);
             len = 4*n+16;
             atom = [QTWriter.Bit32(len) double('stco') ...	% Atom header
@@ -1444,7 +1481,7 @@ classdef QTWriter < handle
                         QTWriter.Bit32(framestarts)];     	% Chunk offset table: Chunks
         end
         
-        function [atom len]=stsc_atom()
+        function [atom,len]=stsc_atom()
             atom = [0 0 0 28 double('stsc') ...	% Atom Header
                         0 0 0 0 ...           	% Version, Flags
                         0 0 0 1 ...             % Number of entries
@@ -1454,7 +1491,7 @@ classdef QTWriter < handle
             len = 28;
         end
         
-        function [atom len]=stsd_atom(imageformatname,imagequality,...
+        function [atom,len]=stsd_atom(imageformatname,imagequality,...
                                       framewidth,frameheight,movieformatname,...
                                       bitdepth,colorspace,transparency)
             if transparency
@@ -1492,7 +1529,7 @@ classdef QTWriter < handle
             len = 102;
         end
         
-        function [atom len]=stsz_atom(numberofframes,framelengths)
+        function [atom,len]=stsz_atom(numberofframes,framelengths)
             len = 4*numberofframes+20;
             atom = [QTWriter.Bit32(len) double('stsz') ...	% Atom Header
                         0 0 0 0 ...                         % Version, Flags
@@ -1501,7 +1538,7 @@ classdef QTWriter < handle
                         QTWriter.Bit32(framelengths)];      % Sample size table: Samples
         end
         
-        function [atom len]=stts_atom(numberofframes,sampleduration)
+        function [atom,len]=stts_atom(numberofframes,sampleduration)
             len = 8*numberofframes+16;
             ttstable = [ones(1,numberofframes);sampleduration];
             atom = [QTWriter.Bit32(len) double('stts') ... 	% Atom Header
@@ -1510,7 +1547,7 @@ classdef QTWriter < handle
                         QTWriter.Bit32(ttstable(:)')];     	% Time-to-sample table: Sample count, Sample duration
         end
         
-        function [atom len]=tapt_atom(framewidth,frameheight)
+        function [atom,len]=tapt_atom(framewidth,frameheight)
             width = QTWriter.Bit32(framewidth*65536);
             height = QTWriter.Bit32(frameheight*65536);
             atom = [0 0 0 68 double('tapt') ...   	% Atom Header
@@ -1532,7 +1569,7 @@ classdef QTWriter < handle
             len = 68;
         end
         
-        function [atom len]=tkhd_atom(time,duration,framewidth,frameheight)
+        function [atom,len]=tkhd_atom(time,duration,framewidth,frameheight)
             atom = [0 0 0 92 double('tkhd') ...                 % Atom Header
                         0 0 0 15 ...                            % Version, Flags
                         QTWriter.Bit32(time) ...              	% Creation time
@@ -1553,7 +1590,7 @@ classdef QTWriter < handle
             len = 92;
         end
         
-        function [atom len]=udta_atom(movieloop,movieplayallframes)
+        function [atom,len]=udta_atom(movieloop,movieplayallframes)
             if strcmp(movieloop,'none')
                 loopudta = [];
                 loopudtalen = 0;
@@ -1563,8 +1600,8 @@ classdef QTWriter < handle
                                 0 0 0 loopval];
                 loopudtalen = 12;
             end
-            versionstring = ['QTWriter for Matlab, Version 1.0, April 28, '...
-                             '2012, Andrew D. Horchler'];
+            versionstring = ['QTWriter for Matlab, Version 1.1, November 14,'...
+                             ' 2013, Andrew D. Horchler'];
             versionstringlen = length(versionstring);
             len = 2*versionstringlen+loopudtalen+65;
             atom = [QTWriter.Bit32(len) double('udta') ...	% Atom Header
@@ -1584,7 +1621,7 @@ classdef QTWriter < handle
                             movieplayallframes];
         end
         
-        function [atom len]=vmhd_atom(transparency)
+        function [atom,len]=vmhd_atom(transparency)
             if transparency
                 gmode = [1 0];  % Straight alpha
             else
@@ -1597,7 +1634,7 @@ classdef QTWriter < handle
             len = 20;
         end
         
-        function [atom len]=wide_atom()
+        function [atom,len]=wide_atom()
             atom = [0 0 0 8 double('wide')];
             len = 8;
         end

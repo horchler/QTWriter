@@ -1,12 +1,10 @@
 function strpenddemo
 %STRPENDDEMO  Simulate and animate string pendulum hanging between two cylinders
 %
-%
+%   See also: QTWriter
 
 %   Andrew D. Horchler, adh9 @ case . edu
-%   Created: 3-7-01, Modified: 5-26-12
-%   CC BY-SA, Creative Commons Attribution-ShareAlike License
-%   http://creativecommons.org/licenses/by-sa/3.0/
+%   Created: 3-7-01, Modified: 11-14-13
 
 
 outputMovie = true;
@@ -129,11 +127,11 @@ if outputMovie
     ha = gca;
     frame = getframe(ha);
     getframetimetotal = toc(getframetime);
-
+    
     % Frame-rates
     movtime = tic;
     movObj.FrameRate = 0;
-
+    
     % Write first frame
     movObj.writeMovie(frame);
     movtimetotal = toc(movtime);
@@ -172,7 +170,7 @@ for i = 2:length(t)
         getframetime = tic;
         frame = getframe(ha);
         getframetimetotal = getframetimetotal+toc(getframetime);
-
+        
         % Set frame-rate and write frame
         movtime = tic;
         movObj.FrameRate = fps(i-1);
@@ -188,10 +186,10 @@ if outputMovie
         num2str(toc(animtime)-getframetimetotal-movtimetotal) ' seconds.']);
     disp(['Getting frame: ' num2str(getframetimetotal) ' seconds.']);
     disp(['Writing movie: ' num2str(movtimetotal) ' seconds.']);
-
+    
     % Set looping property
     movObj.Loop = 'loop';
-
+	
     % Finish writing movie and close movie object
     tic
     movObj.close();

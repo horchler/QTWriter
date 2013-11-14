@@ -1,7 +1,7 @@
 QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
-######Version 1.1, 4-25-13######
+######Version 1.1, 11-14-13######
 
 [```OBJ = QTWriter(FILENAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m) constructs a QTWriter object to write QuickTime movie data to a &ldquo;.mov&rdquo; file using lossless Photo PNG compression. ```FILENAME``` is a string enclosed in single quotation marks that specifies the name of the file to create. If ```FILENAME``` does not include an extension the QTWriter constructor appends the &ldquo;.mov&rdquo; extension. ```FILENAME``` can include an absolute or relative path.
 
@@ -11,13 +11,13 @@ Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler
 
 View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)  
 
-Download just the QTWriter class and STRPENDDEMO M-files as a [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (17.3 KB).  
+Download just the QTWriter class, GETFRAMEBG, and STRPENDDEMO M-files as a [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (17.3 KB).  
 &nbsp;  
 
 --------
   
 Copyright &copy; Andrew D. Horchler, *adh9 @ case . edu*  
-Created: 10-3-11, Revision: 1.1, 4-25-13  
+Created: 10-3-11, Revision: 1.1, 11-14-13  
 License: BSD 3-clause license (see below)
 
 QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  
@@ -28,9 +28,9 @@ References:
 &nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[QuickTime File Format Specification](http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF)  
 &nbsp;  
 
-This version tested with Matlab 8.0.0.783 (R2012b)  
-Mac OS X 10.8.3 Build: 12D78, Java 1.6.0_45-b06-451-11M4406  
-QuickTime Player Pro 7.6.6 (1709) Version 1790, QuickTime Player X 10.2 (603.12)  
+This version tested with Matlab 8.1.0.604 (R2013a)  
+Mac OS X 10.8.5 Build: 12F45, Java 1.6.0_65-b14-462-11M4609  
+QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.1 (2599.41), and QuickTime Player X 10.2 (603.17)  
 Compatibility maintained back through Matlab 7.4 (R2007a)
 
 --------
