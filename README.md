@@ -10,10 +10,11 @@ QTWriter
 Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L372-442) method of the QTWriter object. The frame rate of the movie can be continuously varied via the ```'FrameRate'``` property of the QTWriter object (see [```strpenddemo```](https://github.com/horchler/QTWriter/blob/master/strpenddemo.m)). The looping behavior of the output movie can be specified via the ```'Loop'``` property of the QTWriter object: ```'none'```, ```'loop'```, or ```'backandforth'```. Finally, the output movie can be forced to play every frame via the ```'PlayAllFrames'``` property of the QTWriter object. The [```close()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L306-353) method of the QTWriter object is called to finish writing the movie and clean up associated data.
 
 Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m) for further details and options.  
+&nbsp;  
 
-View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)  
+View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/).  
 
-Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files as a [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (17.3 KB).  
+Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files as a [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB).  
 &nbsp;  
 
 --------
