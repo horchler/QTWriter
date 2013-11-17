@@ -1,7 +1,17 @@
 QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
-######Version 1.1, 11-14-13######
+######Version 1.1, 11-16-13######
+####Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)####
+####Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB)####
+####View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)####
+
+How to install (and uninstall) QTWriter:  
+ 1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
+ 2. Move the resultant *QTWriter* folder to the desired permanent location.  
+ 3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
+ 4. Type ```help QTWriter``` in the Matlab command window to view the documentation. See below for how to contribute code to the project. Email enquiries of any nature are always welcome.  
+&nbsp;  
 
 [```OBJ = QTWriter(FILENAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m) constructs a QTWriter object to write QuickTime movie data to a &ldquo;.mov&rdquo; file using lossless Photo PNG compression. ```FILENAME``` is a string enclosed in single quotation marks that specifies the name of the file to create. If ```FILENAME``` does not include an extension the QTWriter constructor appends the &ldquo;.mov&rdquo; extension. ```FILENAME``` can include an absolute or relative path.
 
@@ -12,15 +22,19 @@ Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler
 Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-148) for further details and options.  
 &nbsp;  
 
-View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/).  
-
-Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files as a [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB).  
-&nbsp;  
+How to contribute fixes and new functionality to QTWriter:  
+ 1. Download and expand the *[QTWriter-master.zip](https://github.com/horchler/QTWriter/archive/master.zip)* ZIP archive of the full repository.  
+ 2. Move the resultant *QTWriter-master* folder to the desired permanent location. Rename this folder if desired. 
+ 3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter-master/QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
+ 4. To view and edit the code, type ```edit QTWriter``` in the Matlab command window.
+ 5. Two M-files are currently available for testing QTWriter: ```qtwriter_unittest``` and ```qtwriter_benchmark```.
+ 6. Minor edits and bug reports and fixes can be submitted via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email with any questions.  
+&nbsp;   
 
 --------
   
 Copyright &copy; Andrew D. Horchler, *adh9 @ case . edu*  
-Created: 10-3-11, Revision: 1.1, 11-14-13  
+Created: 10-3-11, Revision: 1.1, 11-16-13  
 License: BSD 3-clause license (see below)
 
 QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  

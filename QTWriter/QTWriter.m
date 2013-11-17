@@ -145,7 +145,8 @@ classdef QTWriter < handle
     %       close(movObj);
     %
     %   See also:
-    %       QTWriter/writeMovie, QTWriter/close, QTWriter/delete
+    %       QTWriter/writeMovie, QTWriter/close, QTWriter/delete,
+    %       QTWriter/install
     
     %   Inspired by MakeQTMovie, Malcolm Slaney, Interval Research, March 1999.
     %   Partially based on the VideoWriter class in Matlab R2011b.
@@ -162,7 +163,7 @@ classdef QTWriter < handle
     %   memory used by the object.
     
     %   Andrew D. Horchler, adh9 @ case . edu
-    %   Created: 10-3-11, Revision: 1.1, 11-14-13
+    %   Created: 10-3-11, Revision: 1.1, 11-16-13
     %
     %   Copyright (c) 2012-2013, Andrew D. Horchler
     %   All rights reserved.
@@ -240,6 +241,8 @@ classdef QTWriter < handle
         TmpImgName = '';
     end
     
+    % ==========================================================================
+    
     methods
         
         function MovieObject = QTWriter(filename,varargin)
@@ -247,23 +250,23 @@ classdef QTWriter < handle
                 error('QTWriter:QTWriter:NoFilename',...
                       'A file name must be specified.');
             end
-            
+
             % Check that provided path and extension are valid
             filename = QTWriter.validatefilepath(filename,'.mov');
-            
+
             % Check if file can be created or overwritten, output full path
             filename = QTWriter.validatefile(filename);
-            
+
             % Set public and private filename properties
             MovieObject.FileName = filename;
             [filePath,file,fileExtension] = fileparts(filename);
             MovieObject.MovieFileName = [file fileExtension];
             MovieObject.MovieFilePath = filePath;
             MovieObject.TmpImgName = tempname;
-            
+
             % Create movie profile
             MovieObject.MovieProfile = QTWriter.createMovieProfile(varargin);
-            
+
             % Set public properties based on profile
             MovieObject.BitDepth = MovieObject.MovieProfile.ImageBitDepth;
             MovieObject.ColorChannels = ...
@@ -308,7 +311,8 @@ classdef QTWriter < handle
                 end
                 
                 % Clear functions and profile
-                if isa(MovieObject(i).MovieProfile.TmpImageWriteFunction,...
+                if isfield(MovieObject(i).MovieProfile,'TmpImageWriteFunction') ...
+                        && isa(MovieObject(i).MovieProfile.TmpImageWriteFunction,...
                         'function_handle')
                     clear MovieObject(i).MovieProfile.TmpImageWriteFunction;
                 end
@@ -477,6 +481,7 @@ classdef QTWriter < handle
     % ==========================================================================
     
     methods (Access=private)
+        
         function writeFrames(MovieObject,frames)
             dataType = class(frames);
             prefDataType = MovieObject.MovieProfile.PreferredDataType;
@@ -635,8 +640,55 @@ classdef QTWriter < handle
     end
     
     % ==========================================================================
+    
+    methods (Static)
+        
+        function install(opt)
+            %INSTALL  Add or remove QTWriter from Matlab search path.
+            %
+            %   QTWriter.install() adds the QTWriter directory (where this class
+            %   function is located) to the Matlab search path and saves the
+            %   path.
+            %
+            %   QTWriter.install('remove') uninstalls QTWriter by removing the
+            %   QTWriter directory from the Matlab search path and saving the
+            %   path. If QTWriter is not installed (on the path), a warning is
+            %   issued.
+            %
+            %   See also:
+            %       PATH, ADDPATH, RMPATH, SAVEPATH
+            
+            if nargin < 1 || any(strcmp(opt,{'add','install','addpath'}))
+                addpath(fileparts(mfilename('fullpath')));
+                status = true;
+            elseif any(strcmp(opt,{'remove','uninstall','rmpath'}))
+                rmpath(fileparts(mfilename('fullpath')));
+                status = false;
+            else
+                error('QTWriter:install:UnknownOption',...
+                     ['Input argument must be the string ''install'' to '...
+                      'install or ''remove'' to uninstall.']);
+            end
+            
+            if savepath
+                error('QTWriter:install:SavePathError',...
+                      'Unable to save pathdef.m file.');
+            end
+            rehash('toolbox');
+            clear('QTWriter');
+            
+            if status
+                fprintf(1,'\n QTWriter installed.\n\n');
+            else
+                fprintf(1,'\n QTWriter uninstalled.\n');
+            end
+        end
+    end
+    
+    % ==========================================================================
 
     methods (Static,Access=private)
+        
         function framerate=checkFrameRate(framerate)
             if isempty(framerate)
                 framerate = 20;
