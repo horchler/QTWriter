@@ -14,24 +14,24 @@ View demo code and example exported movies on the project website: [http://horch
 
 ```OBJ = QTWriter(...,'PropertyName','PropertyValue',...)``` specifies options via property name-value pairs. In addition to the default ```'Photo PNG'``` compression, ```'Photo TIFF'``` and ```'Photo JPEG'``` formats can be specified via the ```'MovieFormat'``` property. Lossless Photo TIFF compression yields larger file sizes than Photo PNG, but is faster (using ```'LZW'``` or the default ```'PackBits'``` for the ```'CompressionType'``` property). Photo JPEG is a lossy format and the ```'Quality'``` property can be used to specify the level of compression to use. The ```'ColorSpace'``` property specifies if the movie is to be output as 24-bit RGB truecolor or 8-bit grayscale. The ```'Transparency'``` property indicates if the movie is to be output with an alpha channel (Photo PNG format only).
 
-Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L405-475) method of the QTWriter object. The frame rate of the movie can be continuously varied via the ```'FrameRate'``` property of the QTWriter object (see [```strpenddemo```](https://github.com/horchler/QTWriter/blob/master/strpenddemo.m)). The looping behavior of the output movie can be specified via the ```'Loop'``` property of the QTWriter object: ```'none'```, ```'loop'```, or ```'backandforth'```. Finally, the output movie can be forced to play every frame via the ```'PlayAllFrames'``` property of the QTWriter object. The [```close()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L339-390) method of the QTWriter object is called to finish writing the movie and clean up associated data.
+Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L409-479) method of the QTWriter object. The frame rate of the movie can be continuously varied via the ```'FrameRate'``` property of the QTWriter object (see [```strpenddemo```](https://github.com/horchler/QTWriter/blob/master/strpenddemo.m)). The looping behavior of the output movie can be specified via the ```'Loop'``` property of the QTWriter object: ```'none'```, ```'loop'```, or ```'backandforth'```. Finally, the output movie can be forced to play every frame via the ```'PlayAllFrames'``` property of the QTWriter object. The [```close()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L343-394) method of the QTWriter object is called to finish writing the movie and clean up associated data.
 
-Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-148) for further details and options.  
+Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-149) for further details and options.  
 &nbsp;  
 
 #####How to install (and uninstall) QTWriter:  
  1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
  2. Move the resultant *QTWriter* folder to the desired permanent location.  
- 3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
+ 3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter/* and run [```QTWriter.install()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L646-686). This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
  4. Type ```help QTWriter``` in the Matlab command window to view the documentation. See below for how to contribute code to the project. Email enquiries of any nature are always welcome.  
 &nbsp; 
 
 #####How to contribute fixes and new functionality to QTWriter:  
  1. Download and expand the *[QTWriter-master.zip](https://github.com/horchler/QTWriter/archive/master.zip)* ZIP archive of the full repository.  
  2. Move the resultant *QTWriter-master* folder to the desired permanent location. Rename this folder if desired. 
- 3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter-master/QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
+ 3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter-master/QTWriter/* and run [```QTWriter.install()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L646-686). This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
  4. To view and edit the code, type ```edit QTWriter``` in the Matlab command window.
- 5. Two M-files are currently available for testing QTWriter: ```qtwriter_unittest``` and ```qtwriter_benchmark```.
+ 5. Two M-files are currently available for testing QTWriter: [```qtwriter_unittest```](https://github.com/horchler/QTWriter/blob/master/qtwriter_unittest.m) and [```qtwriter_benchmark```](https://github.com/horchler/QTWriter/blob/master/qtwriter_benchmark.m).
  6. Minor edits and bug reports and fixes can be submitted via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email with any questions.  
 &nbsp;   
 
