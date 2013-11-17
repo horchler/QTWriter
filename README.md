@@ -2,11 +2,11 @@ QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
 ######Version 1.1, 11-16-13######
-#######Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)#######
-#######Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB)#######
-#######View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)#######
+Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)  
+Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB)  
+View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)  
 
-##How to install (and uninstall) QTWriter:  
+How to install (and uninstall) QTWriter:  
  1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
  2. Move the resultant *QTWriter* folder to the desired permanent location.  
  3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
@@ -23,7 +23,7 @@ Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler
 Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-148) for further details and options.  
 &nbsp;  
 
-##How to contribute fixes and new functionality to QTWriter:  
+How to contribute fixes and new functionality to QTWriter:  
  1. Download and expand the *[QTWriter-master.zip](https://github.com/horchler/QTWriter/archive/master.zip)* ZIP archive of the full repository.  
  2. Move the resultant *QTWriter-master* folder to the desired permanent location. Rename this folder if desired. 
  3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter-master/QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
