@@ -2,16 +2,18 @@ QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
 ######Version 1.1, 11-16-13######
-####Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)####
-####Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB)####
-####View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)####
+###Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)###
+###Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB)###
+###View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)###
 
-How to install (and uninstall) QTWriter:  
+How to install (and uninstall) QTWriter:
  1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
  2. Move the resultant *QTWriter* folder to the desired permanent location.  
  3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter/* and run ```QTWriter.install()```. This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
  4. Type ```help QTWriter``` in the Matlab command window to view the documentation. See below for how to contribute code to the project. Email enquiries of any nature are always welcome.  
 &nbsp;  
+
+--------
 
 [```OBJ = QTWriter(FILENAME)```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m) constructs a QTWriter object to write QuickTime movie data to a &ldquo;.mov&rdquo; file using lossless Photo PNG compression. ```FILENAME``` is a string enclosed in single quotation marks that specifies the name of the file to create. If ```FILENAME``` does not include an extension the QTWriter constructor appends the &ldquo;.mov&rdquo; extension. ```FILENAME``` can include an absolute or relative path.
 
