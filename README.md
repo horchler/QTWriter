@@ -1,7 +1,7 @@
 QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
-######Version 1.1, 11-16-13######
+######Version 1.1, 12-3-13######
 Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)  
 Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.3 KB)  
 View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)  
@@ -38,7 +38,7 @@ Please refer to the detailed help included within [```QTWriter```](https://githu
 --------
   
 Copyright &copy; Andrew D. Horchler, *adh9 @ case . edu*  
-Created: 10-3-11, Revision: 1.1, 11-16-13  
+Created: 10-3-11, Revision: 1.1, 12-3-13  
 License: BSD 3-clause license (see below)
 
 QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  
@@ -46,12 +46,12 @@ parts are based on the [```VideoWriter```](http://www.mathworks.com/help/techdoc
     
 References:  
 &nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[MakeQTMovie - Create QuickTime movies in Matlab](https://engineering.purdue.edu/~malcolm/interval/1999-066/)  
-&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[QuickTime File Format Specification](http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF)  
+&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[QuickTime File Format Specification](https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html)  
 &nbsp;  
 
 This version tested with Matlab 8.1.0.604 (R2013a)  
-Mac OS X 10.8.5 Build: 12F45, Java 1.6.0_65-b14-462-11M4609  
-QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.1 (2599.41), and QuickTime Player X 10.2 (603.17)  
+Mac OS X 10.9 Build: 13A603, Java 1.6.0_65-b14-462-11M4609  
+QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2826), and QuickTime Player X 10.3 (727.1)  
 Compatibility maintained back through Matlab 7.4 (R2007a)
 
 --------
