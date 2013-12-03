@@ -556,7 +556,7 @@ classdef QTWriter < handle
         function y=buildHeader(MovieObject)
             y =	[QTWriter.ftyp_atom() ...
               	 QTWriter.wide_atom() ...
-               	 QTWriter.mdat_atom(MovieObject.FrameLengths)];	% Atom Header
+               	 QTWriter.mdat_atom(MovieObject.FrameLengths)];
         end
         
         function y=buildFooter(MovieObject)
@@ -640,96 +640,6 @@ classdef QTWriter < handle
                                     stsz_a ...
                                     stco_a ...
                     udta_a];
-        end
-        
-        function y=buildHeader2(MovieObject)
-            imageformatname = MovieObject.MovieProfile.ImageFormatName;
-            imagequality = MovieObject.Quality;
-            framewidth = MovieObject.Width;
-            frameheight = MovieObject.Height;
-            movieformatname = MovieObject.MovieProfile.MovieFormatName;
-            bitdepth = MovieObject.BitDepth;
-            colorspace = MovieObject.ColorSpace;
-            framecount = MovieObject.FrameCount;
-            framerates = MovieObject.FrameRates;
-            timescale = QTWriter.checkTimeScale(MovieObject.TimeScale);
-            timescaleexpansion = timescale./framerates;
-            timescaleexpansion(timescaleexpansion == Inf) = 0;
-            sampleduration = ceil(timescaleexpansion);
-            framelengths = MovieObject.FrameLengths;
-            framestarts = [0 cumsum(MovieObject.FrameLengths(1:end-1))];
-            time = round(3600*24*now);
-            transparency = MovieObject.Transparency;
-            duration = sum(sampleduration);
-            preload = false;
-            
-            movieloop = QTWriter.checkLoop(MovieObject.Loop);
-            movieplayallframes = ...
-                QTWriter.checkPlayAllFrames(MovieObject.PlayAllFrames);
-            
-            [stsd_a,stsd_len] = QTWriter.stsd_atom(imageformatname,...
-                imagequality,framewidth,frameheight,movieformatname,bitdepth,...
-                colorspace,transparency);
-            [stts_a,stts_len] = QTWriter.stts_atom(framecount,sampleduration);
-            [stsc_a,stsc_len] = QTWriter.stsc_atom();
-            [stsz_a,stsz_len] = QTWriter.stsz_atom(framecount,framelengths);
-            [stco_a,stco_len] = QTWriter.stco_atom(framestarts);
-            stbl_len = stsd_len+stts_len+stsc_len+stsz_len+stco_len+8;
-            
-            [vmhd_a,vmhd_len] = QTWriter.vmhd_atom(transparency);
-            [hdlr_a2,hdlr_len2] = QTWriter.hdlr_atom('dhlr','alis',...
-                'Apple Alias Data Handler');
-            [dinf_a,dinf_len] = QTWriter.dinf_atom();
-            minf_len = vmhd_len+hdlr_len2+dinf_len+stbl_len+8;
-            
-            [mdhd_a,mdhd_len] = QTWriter.mdhd_atom(time,timescale,duration);
-            [hdlr_a1,hdlr_len1] = QTWriter.hdlr_atom('mhlr','vide',...
-                'Apple Video Media Handler');
-            mdia_len = mdhd_len+hdlr_len1+minf_len+8;
-            
-            [tkhd_a,tkhd_len] = QTWriter.tkhd_atom(time,duration,framewidth,...
-                frameheight);
-            [tapt_a,tapt_len] = QTWriter.tapt_atom(framewidth,frameheight);
-            [edts_a,edts_len] = QTWriter.edts_atom(duration);
-            [load_a,load_len] = QTWriter.load_atom(preload);
-            trak_len = tkhd_len+tapt_len+edts_len+load_len+mdia_len+8;
-            
-            [mvhd_a,mvhd_len] = QTWriter.mvhd_atom(time,timescale,duration);
-            [udta_a,udta_len] = QTWriter.udta_atom(movieloop,...
-                movieplayallframes);
-            moov_len = mvhd_len+trak_len+udta_len+8;
-            
-            [ftyp_a,ftyp_len] = QTWriter.ftyp_atom();
-            [wide_a,wide_len] = QTWriter.wide_atom();
-            
-            framestarts = framestarts+moov_len+ftyp_len+wide_len+8;
-            stco_a = QTWriter.stco_atom(framestarts);
-            
-            % Header
-            y =    [ftyp_a ...
-                    QTWriter.Bit32(moov_len) double('moov') ...               	% Atom Header
-                        mvhd_a ...
-                        QTWriter.Bit32(trak_len) double('trak') ...            	% Atom Header
-                            tkhd_a ...
-                            tapt_a ...
-                            edts_a ...
-                            load_a ...
-                            QTWriter.Bit32(mdia_len) double('mdia') ...        	% Atom Header
-                                mdhd_a ...
-                                hdlr_a1 ...
-                                QTWriter.Bit32(minf_len) double('minf') ...   	% Atom Header
-                                    vmhd_a ...
-                                    hdlr_a2 ...
-                                    dinf_a ...
-                                    QTWriter.Bit32(stbl_len) double('stbl') ...	% Atom Header
-                                        stsd_a ...
-                                        stts_a ...
-                                        stsc_a ...
-                                        stsz_a ...
-                                        stco_a ...
-                        udta_a ...
-                    wide_a ...
-                    QTWriter.mdat_atom(framelengths)];                          % Atom Header
         end
         
     end
