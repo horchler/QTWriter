@@ -1,9 +1,9 @@
 QTWriter
 ========
 ####Export QuickTime Movies with Matlab####
-######Version 1.1, 12-3-13######
+######Version 1.1, 12-7-13######
 Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (12 MB)  
-Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (22.7 KB)  
+Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (23.1 KB)  
 View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)  
 
 ========
@@ -38,7 +38,7 @@ Please refer to the detailed help included within [```QTWriter```](https://githu
 --------
   
 Copyright &copy; Andrew D. Horchler, *adh9 @ case . edu*  
-Created: 10-3-11, Revision: 1.1, 12-3-13  
+Created: 10-3-11, Revision: 1.1, 12-7-13  
 License: BSD 3-clause license (see below)
 
 QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  
