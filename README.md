@@ -19,9 +19,9 @@ Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler
 Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-149) for further details and options.  
 &nbsp;  
 
-#####A note about QuickTime Player and OS X 10.9 Mavericks and later:  
+<sub>#####A note about QuickTime Player and OS X 10.9 Mavericks and later:  
 A feature in OS X 10.9 Mavericks may cause movies encoded using *QTWriter* to be [converted to another format](http://support.apple.com/kb/HT6055) when the files are opened with QuickTime Player (Version 10.3+). Upon opening by QuickTime Player, lossless Photo PNG and Photo TIFF movies are converted to lossy H.264 (Photo JPEG movies are not converted). Options like looping are not preserved in the conversion. One workaround is to use the legacy [QuickTime Player 7](http://support.apple.com/kb/dl923) for playback in such cases. Other media players, such as the free [VLC](http://www.videolan.org/vlc/), also work, but may not support options like looping. Another workaround is to convert Photo PNG and Photo TIFF movies to use the lossless [Apple ProRes 422 codec](http://en.wikipedia.org/wiki/ProRes#ProRes_422) before opening them with QuickTime Player. One way to do this is directly from the Finder using the [*Encode Selected Video Files*](https://discussions.apple.com/thread/4836838) context menu option. The resultant files will likely be larger, but options like looping will be preserved when they are played back using QuickTime Player. A potential future enhancement to QTWriter would be to add an option to directly encode to Apple ProRes 422 (and the other ProRes formats). Any code contributions in this are would be welcome.   
-&nbsp; 
+&nbsp; </sub>
 
 #####How to install (and uninstall) QTWriter:  
  1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
