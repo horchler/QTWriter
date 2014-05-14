@@ -19,6 +19,10 @@ Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler
 Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-149) for further details and options.  
 &nbsp;  
 
+#####A note about QuickTime Player and OS X 10.9 Mavericks and later:  
+A feature in OS X 10.9 Mavericks may cause movies encoded using *QTWriter* to be [converted to another format](http://support.apple.com/kb/HT6055) when the files are opened with QuickTime Player (Version 10.3+). Upon opening by QuickTime Player, lossless Photo PNG and Photo TIFF movies are converted to lossy H.264 (Photo JPEG movies are not converted). Options like looping are not preserved in the conversion. One workaround is to use the legacy [QuickTime Player 7](http://support.apple.com/kb/dl923) for playback in such cases. Other media players, such as the free [VLC](http://www.videolan.org/vlc/), also work, but may not support options like looping. Another workaround is to convert Photo PNG and Photo TIFF movies to use the lossless [Apple ProRes 422 codec](http://en.wikipedia.org/wiki/ProRes#ProRes_422) before opening them with QuickTime Player. One way to do this is directly from the Finder using the [*Encode Selected Video Files*](https://discussions.apple.com/thread/4836838) context menu option. The resultant files will likely be larger, but options like looping will be preserved when they are played back using QuickTime Player. A potential future enhancement to QTWriter would be to add an option to directly encode to Apple ProRes 422 (and the other ProRes formats). Any code contributions in this are would be welcome.   
+&nbsp; 
+
 #####How to install (and uninstall) QTWriter:  
  1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
  2. Move the resultant *QTWriter* folder to the desired permanent location.  
@@ -32,13 +36,13 @@ Please refer to the detailed help included within [```QTWriter```](https://githu
  3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter-master/QTWriter/* and run [```QTWriter.install()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L646-686). This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
  4. To view and edit the code, type ```edit QTWriter``` in the Matlab command window.
  5. Two M-files are currently available for testing QTWriter: [```qtwriter_unittest```](https://github.com/horchler/QTWriter/blob/master/qtwriter_unittest.m) and [```qtwriter_benchmark```](https://github.com/horchler/QTWriter/blob/master/qtwriter_benchmark.m).
- 6. Minor edits and bug reports and fixes can be submitted via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email with any questions.  
+ 6. Minor edits and bug reports and fixes can be submitted by [filing an issue](https://github.com/horchler/QTWriter/issues) or via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email or [file an issue](https://github.com/horchler/QTWriter/issues) if you have any questions.  
 &nbsp;   
 
 --------
   
 Copyright &copy; Andrew D. Horchler, *adh9 @ case . edu*  
-Created: 10-3-11, Revision: 1.1, 12-7-13  
+Created: 10-3-11, Revision: 1.1, 5-14-14  
 License: BSD 3-clause license (see below)
 
 QTWriter is inspired by [```MakeQTMovie```](https://engineering.purdue.edu/%7Emalcolm/interval/1999-066/MakeQTMovie.m) by Malcolm Slaney (Interval Research, March 1999) and  
@@ -51,7 +55,7 @@ References:
 
 This version tested with Matlab 8.1.0.604 (R2013a)  
 Mac OS X 10.9 Build: 13A603, Java 1.6.0_65-b14-462-11M4609  
-QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2826), and QuickTime Player X 10.3 (727.1)  
+QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2826), and QuickTime Player 10.3 (727.1)  
 Compatibility maintained back through Matlab 7.4 (R2007a)
 
 --------
