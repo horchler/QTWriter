@@ -19,10 +19,6 @@ Frames are written via the [```writeMovie(FRAME)```](https://github.com/horchler
 Please refer to the detailed help included within [```QTWriter```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L2-149) for further details and options.  
 &nbsp;  
 
-A note about QuickTime Player and OS X 10.9 Mavericks and later:  
-<sub><small>A feature in OS X 10.9 Mavericks may cause movies encoded using *QTWriter* to be [converted to another format](http://support.apple.com/kb/HT6055) when opened with QuickTime Player (Version 10.3+). QuickTime Player converts lossless Photo PNG and Photo TIFF movies to lossy H.264 (Photo JPEG movies are not converted). Options like looping are not preserved in the conversion. A workaround is to use the legacy [QuickTime Player 7](http://support.apple.com/kb/dl923) for playback. Other media players, e.g., the free [VLC](http://www.videolan.org/vlc/), also work, but may not support options like looping. Another workaround is to convert Photo PNG and Photo TIFF movies to the lossless [Apple ProRes 422 codec](http://en.wikipedia.org/wiki/ProRes#ProRes_422) before opening them with QuickTime Player. One way to do this is directly from the Finder using the [*Encode Selected Video Files*](https://discussions.apple.com/thread/4836838) context menu option. The resultant files will likely be larger, but options like looping will be preserved when played back using QuickTime Player. A potential enhancement to QTWriter would be to add an option to directly encode to Apple ProRes 422 (and the other ProRes formats). Any code contributions in this are would be welcome.   
-&nbsp; </small></sub>
-
 #####How to install (and uninstall) QTWriter:  
  1. Download and expand the *[QTWriter.zip](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip)* ZIP archive.  
  2. Move the resultant *QTWriter* folder to the desired permanent location.  
@@ -38,6 +34,10 @@ A note about QuickTime Player and OS X 10.9 Mavericks and later:
  5. Two M-files are currently available for testing QTWriter: [```qtwriter_unittest```](https://github.com/horchler/QTWriter/blob/master/qtwriter_unittest.m) and [```qtwriter_benchmark```](https://github.com/horchler/QTWriter/blob/master/qtwriter_benchmark.m).
  6. Minor edits and bug reports and fixes can be submitted by [filing an issue](https://github.com/horchler/QTWriter/issues) or via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email or [file an issue](https://github.com/horchler/QTWriter/issues) if you have any questions.  
 &nbsp;   
+
+A note about QuickTime Player and OS X 10.9 Mavericks and later:  
+<small>A feature in OS X 10.9 Mavericks may cause movies encoded using *QTWriter* to be [converted to another format](http://support.apple.com/kb/HT6055) when opened with QuickTime Player (Version 10.3+). QuickTime Player converts lossless Photo PNG and Photo TIFF movies to lossy H.264 (Photo JPEG movies are not converted). Options like looping are not preserved in the conversion. A workaround is to use the legacy [QuickTime Player 7](http://support.apple.com/kb/dl923) for playback. Other media players, e.g., the free [VLC](http://www.videolan.org/vlc/), also work, but may not support options like looping. Another workaround is to convert Photo PNG and Photo TIFF movies to the lossless [Apple ProRes 422 codec](http://en.wikipedia.org/wiki/ProRes#ProRes_422) before opening them with QuickTime Player. One way to do this is directly from the Finder using the [*Encode Selected Video Files*](https://discussions.apple.com/thread/4836838) context menu option. The resultant files will likely be larger, but options like looping will be preserved when played back using QuickTime Player. A potential enhancement to QTWriter would be to add an option to directly encode to Apple ProRes 422 (and the other ProRes formats). Any code contributions in this are would be welcome.  </small>
+&nbsp; 
 
 --------
   
