@@ -15,7 +15,7 @@ function qtwriter_unittest(clearfiles)
 %   value (TRUE or FALSE).
 
 %   Andrew D. Horchler, adh9 @ case . edu
-%   Created: 4-30-12, Modified: 4-25-13
+%   Created: 4-30-12, Modified: 4-22-15
 
 
 % Make sure QTWriter on path, otherwise ensure in right location and add it
@@ -280,10 +280,12 @@ catch err
 end
 
 function outputmovie(movObj,clearfiles)
-Z = peaks(19);
+n = 19;
+Z = peaks(n);
 surf(Z);
 frames = 4;
-axis tight;
+bound = ceil(max(abs(Z(:))));
+axis([1 n 1 n -bound bound]);
 set(gca,'nextplot','replacechildren');
 
 % Animate plot and write movie

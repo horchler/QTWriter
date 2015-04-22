@@ -53,9 +53,16 @@ References:
 &nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;[QuickTime File Format Specification](https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html)  
 &nbsp;  
 
-This version tested with Matlab 8.1.0.604 (R2013a)  
+This version tested with:
+&nbsp;  
+Matlab 8.1.0.604 (R2013a)  
 Mac OS X 10.9 Build: 13A603, Java 1.6.0_65-b14-462-11M4609  
 QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2826), and QuickTime Player 10.3 (727.1)  
+&nbsp;  
+Matlab 8.5.0.173394 (R2015a)  
+Mac OS X 10.10.3 Build: 14D136, Java 1.7.0_60-b19  
+QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2890), and QuickTime Player 10.4 (833.6)  
+&nbsp;  
 Compatibility maintained back through Matlab 7.4 (R2007a)
 
 --------
