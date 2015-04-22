@@ -32,7 +32,7 @@ Please refer to the detailed help included within [```QTWriter```](https://githu
  3. If you wish to add QTWriter to your Matlab path, navigate to *QTWriter-master/QTWriter/* and run [```QTWriter.install()```](https://github.com/horchler/QTWriter/blob/master/QTWriter/QTWriter.m#L646-686). This adds the necessary files and folders to Matlab's search path. To uninstall QTWriter, run ```QTWriter.install('remove')```.  
  4. To view and edit the code, type ```edit QTWriter``` in the Matlab command window.
  5. Two M-files are currently available for testing QTWriter: [```qtwriter_unittest```](https://github.com/horchler/QTWriter/blob/master/qtwriter_unittest.m) and [```qtwriter_benchmark```](https://github.com/horchler/QTWriter/blob/master/qtwriter_benchmark.m).
- 6. Minor edits and bug reports and fixes can be submitted by [filing an issue](https://github.com/horchler/QTWriter/issues) or via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email or [file an issue](https://github.com/horchler/QTWriter/issues) if you have any questions.  
+ 6. Minor edits and bug reports and fixes can be submitted by [filing an issue](https://github.com/horchler/QTWriter/issues) or via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email or file an issue if you have any questions.  
 &nbsp;   
 
 A note about QuickTime Player and OS X 10.9 Mavericks and later:  
@@ -41,7 +41,7 @@ A note about QuickTime Player and OS X 10.9 Mavericks and later:
 
 --------
   
-Copyright &copy; Andrew D. Horchler, *adh9 @ case . edu*  
+Andrew D. Horchler, *adh9 @ case . edu*  
 Created: 10-3-11, Revision: 1.1, 5-14-14  
 License: BSD 3-clause license (see below)
 
@@ -60,7 +60,7 @@ Compatibility maintained back through Matlab 7.4 (R2007a)
 
 --------
 
-Copyright &copy; 2012&ndash;2013, Andrew D. Horchler  
+Copyright &copy; 2012&ndash;2015, Andrew D. Horchler  
 All rights reserved.  
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
