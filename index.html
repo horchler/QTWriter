@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="ac_quicktime.js" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -71,7 +72,13 @@ close(movObj);
 
 <p>Example output:</p>
 <!--<embed src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" width="560" height="436" autoplay="false" controller="true" loop="palindrome" playeveryframe="false" pluginspace="http://www.apple.com/quicktime/">-->
-<video width="560" height="436" controls="controls" loop="loop" preload="none" src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" type="video/quicktime"></video>
+<video width="560" height="436" controls="controls" loop="loop" preload="none">
+  <source src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" type="video/quicktime">
+<!-- fallback -->
+  <script type="text/javascript">
+    QT_WriteOBJECT('https://github.com/horchler/QTWriter/raw/master/peaks.mov' , '560', '436', '');
+  </script>
+</video>
 <div><small>(<a href="https://github.com/horchler/QTWriter/raw/master/peaks.mov">Download Movie</a>, 5.1 MB QuickTime)</small></div><br>
 
 <p>The included demo, <code><a href="https://github.com/horchler/QTWriter/blob/master/strpenddemo.m">strpenddemo</a></code>, provides a more-detailed usage example. The M-file simulates and animates a string pendulum hanging between two cylinders and generates this variable frame-rate movie using QTWriter:</p>
