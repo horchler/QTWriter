@@ -71,19 +71,13 @@ close(movObj);
 </div>
 
 <p>Example output:</p>
-<!--<embed src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" width="560" height="436" autoplay="false" controller="true" loop="palindrome" playeveryframe="false" pluginspace="http://www.apple.com/quicktime/">-->
-<video width="560" height="436" controls="controls" loop="loop" preload="none">
-  <!--<source src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" type="video/quicktime">-->
-<!-- fallback -->
-  <script type="text/javascript">
-    QT_WriteOBJECT('https://github.com/horchler/QTWriter/raw/master/peaks.mov' , '560', '436', '');
-  </script>
-</video>
+<embed src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" width="560" height="436" autoplay="false" controller="true" loop="palindrome" playeveryframe="false" pluginspace="http://www.apple.com/quicktime/">
+<!--<video width="560" height="436" controls="controls" loop="loop" preload="none" src="https://github.com/horchler/QTWriter/raw/master/peaks.mov" type="video/quicktime"></video>-->
 <div><small>(<a href="https://github.com/horchler/QTWriter/raw/master/peaks.mov">Download Movie</a>, 5.1 MB QuickTime)</small></div><br>
 
 <p>The included demo, <code><a href="https://github.com/horchler/QTWriter/blob/master/strpenddemo.m">strpenddemo</a></code>, provides a more-detailed usage example. The M-file simulates and animates a string pendulum hanging between two cylinders and generates this variable frame-rate movie using QTWriter:</p>
-<span style="margin-left:97px"><video width="366" height="360" controls="controls" loop="loop" preload="none" src="https://github.com/horchler/QTWriter/raw/master/strpenddemo.mov" type="video/quicktime"></video></span><br>
-<!--<span style="margin-left:97px"><embed src="https://github.com/horchler/QTWriter/raw/master/strpenddemo.mov" width="366" height="360" autoplay="false" controller="true" loop="true" playeveryframe="false" pluginspace="http://www.apple.com/quicktime/"></span><br>-->
+<!--<span style="margin-left:97px"><video width="366" height="360" controls="controls" loop="loop" preload="none" src="https://github.com/horchler/QTWriter/raw/master/strpenddemo.mov" type="video/quicktime"></video></span><br>-->
+<span style="margin-left:97px"><embed src="https://github.com/horchler/QTWriter/raw/master/strpenddemo.mov" width="366" height="360" autoplay="false" controller="true" loop="true" playeveryframe="false" pluginspace="http://www.apple.com/quicktime/"></span><br>
 <div style="margin-left:97px"><small>(<a href="https://github.com/horchler/QTWriter/raw/master/strpenddemo.mov">Download Movie</a>, 1.5 MB QuickTime)</small></div><br>
 <br>
 <p>Also included is <code><a href="https://github.com/horchler/QTWriter/blob/master/getframebg.m">getframebg</a></code>, a faster version of Matlab's <code><a href="http://www.mathworks.com/help/matlab/ref/getframe.html">getframe</a></code>. It captures figures in the background without rendering content to the screen, making it faster, avoiding capture of overlapping windows, and allowing the use of screensavers.</p>
