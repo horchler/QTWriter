@@ -4,7 +4,7 @@ function strpenddemo
 %   See also: QTWriter
 
 %   Andrew D. Horchler, adh9 @ case . edu
-%   Created: 3-7-01, Modified: 11-14-13
+%   Created: 3-7-01, Modified: 4-22-15
 
 
 outputMovie = true;
@@ -28,21 +28,21 @@ tic
 disp(['Simulating: ' num2str(toc) ' seconds.']);
 
 % Plot data: angle, angular rate, step-size, with true steps indicated
-figure
-subplot(311)
-plot(t,y(:,1),'b',t(1:4:end),y(1:4:end,1),'k.')
-title('String Pendulum - Simulation Data','Interpreter','latex')
-ylabel('$\theta$ (rad)','Interpreter','latex')
-axis tight
-subplot(312)
-plot(t,y(:,2),'b',t(1:4:end),y(1:4:end,2),'k.')
-ylabel('$\dot{\theta}$ (rad/s)','Interpreter','latex')
-axis tight
-subplot(313)
-plot(t,[0;diff(t)],'b',t(1:4:end),[0;diff(t(1:4:end))]/4,'k.')
-xlabel('$time$ (sec)','Interpreter','latex')
-ylabel('$time-step$ (sec)','Interpreter','latex')
-axis tight
+figure;
+subplot(311);
+plot(t,y(:,1),'b',t(1:4:end),y(1:4:end,1),'k.');
+title('String Pendulum - Simulation Data','Interpreter','latex');
+ylabel('$\theta$ (rad)','Interpreter','latex');
+axis tight;
+subplot(312);
+plot(t,y(:,2),'b',t(1:4:end),y(1:4:end,2),'k.');
+ylabel('$\dot{\theta}$ (rad/s)','Interpreter','latex');
+axis tight;
+subplot(313);
+plot(t,[0;diff(t)],'b',t(1:4:end),[0;diff(t(1:4:end))]/4,'k.');
+xlabel('$time$ (sec)','Interpreter','latex');
+ylabel('$time-step$ (sec)','Interpreter','latex');
+axis tight;
 
 
 % Create movie object
@@ -54,19 +54,17 @@ end
 
 % Run animation of data simulated above
 animtime = tic;
-hf = figure;
-axis equal
-ax = [-1.6 1.6 -2.5 0.5]*R;
-axis(ax);
-%set(hf,'Renderer','painters','Color',[1 1 1]);	% Fast animation, many objects
-%set(hf,'Renderer','zbuffer','Color',[1 1 1]); 	% Smooth fast animation
-%set(hf,'DoubleBuffer','on','Color',[1 1 1]);	% Smooth animation, surf plots
-set(hf,'Renderer','opengl','Color',[1 1 1]);  	% Smooth animation
+figure('Renderer','opengl','Color','w');	% OpenGL for mooth animation
+%figure('Renderer','painters','Color','w');      % Fast animation, many objects
+%figure('Renderer','zbuffer','Color','w'); 	     % Smooth fast animation
+%figure('DoubleBuffer','on','Color','w');	     % Smooth animation, surf plots
+axis equal;
+axis([-1.6 1.6 -2.5 0.5]*R);
 ht = text(0,0,'String Pendulum Animation','FontSize',12);
 tsz = get(ht,'Extent');
-set(ht,'Position',[-0.5*tsz(3) -2.25*R 0]);
-axis off
-hold on
+set(ht,'Position',[-0.5*tsz(3) -2.3*R 0]);
+axis off;
+hold on;
 
 % Transform into x-y coordinates
 n = 15;
@@ -92,7 +90,7 @@ zcirc = z+1;
 
 % Allocate handle vectors for fading animation
 fadescale = 1/12;
-fade = (4*fadescale:fadescale:1-fadescale)'*[1 1];
+fade = (4*fadescale:fadescale:1-fadescale).'*[1 1];
 m = size(fade,1);
 hfade_lines = zeros(1,m);
 hfade_points = zeros(1,m);
@@ -116,9 +114,12 @@ patch(R*((xcirc(1,:)-x2(1))/radius+1),R*(ycirc(1,:)-y2(1))/radius,zcirc,...
     [0 0 0]+0.95,'EdgeColor',[0 0 0]+0.97,'LineSmoothing','on');
 patch(xline(1,1)+2*radius*[-1 0 1],yline(1,1)+2*radius*[1 0 1],[0 0 0]+2*m+3,...
     [0 0 0]+0.2,'EdgeColor',[0 0 0]+0.3,'LineSmoothing','on');
-ht = text(-1.5*R,0.3*R,realmax,['Time: ' num2str(t(1),4) ' '],'FontSize',14);
-hc = text(-1.5*R,0.1*R,realmax,'Frame: 1 ','FontSize',14);
-hr = text(-1.5*R,-0.1*R,realmax,'   0 FPS ','FontSize',14);
+
+% Initial text
+Zidx = 1e2;
+ht = text(-1.5*R,0.3*R,Zidx,['Time: ' num2str(t(1),4) ' '],'FontSize',14);
+hc = text(-1.5*R,0.1*R,Zidx,'Frame: 1 ','FontSize',14);
+hr = text(-1.5*R,-0.1*R,Zidx,'   0 FPS ','FontSize',14);
 
 % Get frame (implicit drawnow)
 fps = 1./diff(t);
@@ -130,13 +131,13 @@ if outputMovie
     
     % Frame-rates
     movtime = tic;
-    movObj.FrameRate = 0;
+    movObj.FrameRate = fps(1);
     
     % Write first frame
     movObj.writeMovie(frame);
     movtimetotal = toc(movtime);
 else
-    drawnow
+    drawnow;
 end
 
 % Animation loop
@@ -177,7 +178,7 @@ for i = 2:length(t)
         movObj.writeMovie(frame);
         movtimetotal = movtimetotal+toc(movtime);
     else
-        drawnow('expose')
+        drawnow('expose');
     end
 end
 

@@ -35,8 +35,8 @@ Please refer to the detailed help included within [```QTWriter```](https://githu
  6. Minor edits and bug reports and fixes can be submitted by [filing an issue](https://github.com/horchler/QTWriter/issues) or via email. To add new functionality or make propose major changes, please [fork the repository](https://help.github.com/articles/fork-a-repo). Any new features should be accompanied by some means of testing. Email or file an issue if you have any questions.  
 &nbsp;   
 
-A note about QuickTime Player and OS X 10.9 Mavericks and later:  
-<sub>A feature in OS X 10.9 Mavericks may cause movies encoded using *QTWriter* to be [converted to another format](http://support.apple.com/kb/HT6055) when opened with QuickTime Player (Version 10.3+). QuickTime Player converts lossless Photo PNG and Photo TIFF movies to lossy H.264 (Photo JPEG movies are not converted). Options like looping are not preserved in the conversion. A workaround is to use the legacy [QuickTime Player 7](http://support.apple.com/kb/dl923) for playback. Other media players, e.g., the free [VLC](http://www.videolan.org/vlc/), also work, but may not support options like looping. Another workaround is to convert Photo PNG and Photo TIFF movies to the lossless [Apple ProRes 422 codec](http://en.wikipedia.org/wiki/ProRes#ProRes_422) before opening them with QuickTime Player. One way to do this is directly from the Finder using the [*Encode Selected Video Files*](https://discussions.apple.com/thread/4836838) context menu option. The resultant files will likely be larger, but options like looping will be preserved when played back using QuickTime Player. A potential enhancement to QTWriter would be to add an option to directly encode to Apple ProRes 422 (and the other ProRes formats). Any code contributions in this are would be welcome.  </sub>
+A note about QuickTime Player and OS X 10.9+ and later:  
+<sub>A feature in OS X 10.9+ causes Photo PNG and Photo Tiff movies encoded using *QTWriter* to be [converted to another format](http://support.apple.com/kb/HT6055), lossy H.264, when opened with QuickTime Player (Version 10.3+). This is less of an issue in OS X 10.11 as these formats are converted to lossless Apple ProRes 4444. Options like looping are not preserved in the conversion (and not supportted by Quicktime Player 10+). A workaround is to use the legacy [QuickTime Player 7](http://support.apple.com/kb/dl923) for playback. Other media players, e.g., the free [VLC](http://www.videolan.org/vlc/), also work, but may not support options like looping. Another workaround is to convert Photo PNG and Photo TIFF movies to the lossless [Apple ProRes 422 codec](http://en.wikipedia.org/wiki/ProRes#ProRes_422) before opening them with QuickTime Player. One way to do this is directly from the Finder using the [*Encode Selected Video Files*](https://discussions.apple.com/thread/4836838) context menu option. The resultant files will likely be larger, but options like looping will be preserved when played back using QuickTime Player. A potential enhancement to QTWriter would be to add an option to directly encode to Apple ProRes 422 (and the other ProRes formats). Any code contributions in this are would be welcome.  </sub>
 &nbsp; 
 
 --------
@@ -63,11 +63,15 @@ Matlab 8.5.0.173394 (R2015a)
 Mac OS X 10.10.3 Build: 14D136, Java 1.7.0_60-b19  
 QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2890), and QuickTime Player 10.4 (833.6)  
 &nbsp;  
+Matlab 9.0.0.341360 (R2016a)  
+Mac OS X 10.11.4 (Build: 15E65), Java 1.7.0_75-b13  
+QuickTime Player Pro 7.6.6 (1709), QuickTime Version 7.7.3 (2943.3), and QuickTime Player 10.4 (855)  
+&nbsp;  
 Compatibility maintained back through Matlab 7.4 (R2007a)
 
 --------
 
-Copyright &copy; 2012&ndash;2015, Andrew D. Horchler  
+Copyright &copy; 2012&ndash;2016, Andrew D. Horchler  
 All rights reserved.  
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
