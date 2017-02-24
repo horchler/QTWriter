@@ -3,7 +3,6 @@ QTWriter
 ####Export QuickTime Movies with Matlab####
 ######Version 1.1, 5-14-14######
 Download Repository: [ZIP Archive](https://github.com/horchler/QTWriter/archive/master.zip) (13 MB)  
-Download just the ```QTWriter``` class, ```getframebg```, and ```strpenddemo``` M-files: [ZIP archive](https://github.com/horchler/QTWriter/raw/master/QTWriter.zip) (23.1 KB)  
 View demo code and example exported movies on the project website: [http://horchler.github.io/QTWriter/](http://horchler.github.io/QTWriter/)  
 
 ========
