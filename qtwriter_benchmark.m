@@ -16,7 +16,7 @@ function qtwriter_benchmark(clearfiles,filename)
 %   text file specified by FILENAME, which may include a relative or absolute
 %   absolute path. A '.txt' extension is added if FILENAME has no extension.
 
-%   Andrew D. Horchler, adh9 @ case . edu
+%   Andrew D. Horchler, horchler @ gmail . com
 %   Created: 5-30-12, Modified: 4-25-13
 
 

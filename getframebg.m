@@ -30,7 +30,7 @@ function [x,m]=getframebg(h)
 %   Inspired by: http://mathworks.com/support/solutions/en/data/1-3NMHJ5/
 %   Some code is loosely based on GETFRAME in Matlab R2012a. 
 
-%   Andrew D. Horchler, adh9 @ case . edu
+%   Andrew D. Horchler, horchler @ gmail . com
 %   Created: 6-13-12, Modified: 11-12-13
 
 

@@ -3,7 +3,7 @@ function strpenddemo
 %
 %   See also: QTWriter
 
-%   Andrew D. Horchler, adh9 @ case . edu
+%   Andrew D. Horchler, horchler @ gmail . com
 %   Created: 3-7-01, Modified: 4-22-15
 
 

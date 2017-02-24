@@ -162,10 +162,10 @@ classdef QTWriter < handle
     %   which attempts to remove all of the temporary images and assosciated
     %   memory used by the object.
     
-    %   Andrew D. Horchler, adh9 @ case . edu
+    %   Andrew D. Horchler, horchler @ gmail . com
     %   Created: 10-3-11, Revision: 1.1, 12-7-13
     %
-    %   Copyright (c) 2012-2013, Andrew D. Horchler
+    %   Copyright (c) 2012-2017, Andrew D. Horchler
     %   All rights reserved.
     %
     %   Redistribution and use in source and binary forms, with or without

@@ -14,7 +14,7 @@ function qtwriter_unittest(clearfiles)
 %   deletes this output file after each test. The input CLEARFILES is a logical
 %   value (TRUE or FALSE).
 
-%   Andrew D. Horchler, adh9 @ case . edu
+%   Andrew D. Horchler, horchler @ gmail . com
 %   Created: 4-30-12, Modified: 4-22-15
 
 
